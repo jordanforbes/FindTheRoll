@@ -1,23 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import React, { useEffect, useState } from "react";
+import "./App.css";
+// import { fetchSpells, fetchSpellByName } from "../db/DataFetch";
 
 function App() {
+  const [allSpells, setAllSpells] = useState({});
+  const [spellObj, setSpellObj] = useState({});
+  const url = "https://www.dnd5eapi.co/api/";
+  var spellNames = [];
+
+  async function fetchSpells() {
+    try {
+      fetch(url + "/spells/", {
+        method: "GET",
+      })
+        .then((res) => res.json())
+        .then((res) => setAllSpells(res["results"]));
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function fetchSpellByName(name) {
+    try {
+      const res = await fetch(url + "/spells/" + name, {
+        method: "GET",
+      });
+      return res.json();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  useEffect(() => {
+    fetchSpells();
+    console.log("debug");
+    // console.log(allSpells);
+  }, []);
+
+  for (var i = 0; i < allSpells.length; i++) {
+    spellNames.push(allSpells[i]["name"]);
+  }
+  console.log(spellNames);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {spellNames.map((n) => (
+        <p>{n}</p>
+      ))}
     </div>
   );
 }

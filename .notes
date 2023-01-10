@@ -1,0 +1,38 @@
+two folders: server/db
+
+route testing-
+curl in terminal
+-GET http://localhost:3000
+postman
+
+set up two different routes for app.get and app.delete
+
+save spells in personal spell book.
+GET all spells
+GET saved spells
+GET individual spells
+DELETE saved spells
+
+questions to answer:
+for front end- where should the initial call go for the initial page load
+
+persistent data should be saved
+  where's it going to look for it?
+  -JSON file?
+end result is to put on resume that I created a RESTful api that does GET, DELETE, POST, maybe PUT
+
+PUT, PATCH, or UPDATE would be used if spells are reordered
+
+pageination
+  -creates pages
+
+
+step 1: consume api
+used fetch api
+https://www.youtube.com/watch?v=cuEtnrL9-H0&t=300s
+
+https://stackoverflow.com/questions/45018338/javascript-fetch-api-how-to-save-output-to-variable-as-an-object-not-the-prom
+
+assign data to variable for use outside //DONE
+
+dropped the express server and just moved to the react server. I'm able to put the information into a useState hook

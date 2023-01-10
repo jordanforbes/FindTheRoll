@@ -1,0 +1,8 @@
+app currently
+
+display all spell names on page
+
+click spell name to see details
+
+issues:
+cannot render index page with express
