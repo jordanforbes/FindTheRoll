@@ -1,7 +1,7 @@
 // import fetch from "node-fetch";
 import Express from "express";
 // import { fetchObj } from "../db/fetchObj.js";
-import { fetchSpells, fetchSpellByName } from "./db/DataFetch.js";
+import { fetchSpells, fetchSpellByName } from "../src/DataFetch.js";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import path from "path";

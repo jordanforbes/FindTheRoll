@@ -1,13 +1,15 @@
-import logo from "./logo.svg";
 import React, { useEffect, useState } from "react";
 import "./App.css";
-// import { fetchSpells, fetchSpellByName } from "../db/DataFetch";
+import DDMenu from "./components/DDMenu.jsx";
+import SpellDetails from "./components/SpellDetails.jsx";
 
 function App() {
   const [allSpells, setAllSpells] = useState({});
+  const [currentSpell, setCurrentSpell] = useState("scorching-ray");
   const [spellObj, setSpellObj] = useState({});
   const url = "https://www.dnd5eapi.co/api/";
   var spellNames = [];
+  var spellIndex = [];
 
   async function fetchSpells() {
     try {
@@ -23,10 +25,11 @@ function App() {
 
   async function fetchSpellByName(name) {
     try {
-      const res = await fetch(url + "/spells/" + name, {
+      fetch(url + "/spells/" + name, {
         method: "GET",
-      });
-      return res.json();
+      })
+        .then((res) => res.json())
+        .then((res) => setSpellObj(res["results"]));
     } catch (err) {
       console.error(err);
     }
@@ -34,20 +37,33 @@ function App() {
 
   useEffect(() => {
     fetchSpells();
+    fetchSpellByName(currentSpell);
     console.log("debug");
+    console.log(spellObj);
     // console.log(allSpells);
   }, []);
 
   for (var i = 0; i < allSpells.length; i++) {
     spellNames.push(allSpells[i]["name"]);
+    spellIndex.push(allSpells[i]["index"]);
   }
-  console.log(spellNames);
+  // console.log(spellNames);
 
   return (
     <div className="App">
-      {spellNames.map((n) => (
-        <p>{n}</p>
-      ))}
+      <div className="container">
+        <div className="col-md-4">
+          <DDMenu
+            spellNames={spellNames}
+            spellIndex={spellIndex}
+            currentSpell={currentSpell}
+            setCurrentSpell={setCurrentSpell}
+          />
+        </div>
+        <div className="col-md-4">
+          <SpellDetails />
+        </div>
+      </div>
     </div>
   );
 }
