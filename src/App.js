@@ -8,10 +8,11 @@ function App() {
   const [allSpells, setAllSpells] = useState([]);
   // const [error, setError] = useState(false);
   const [skillChoice, setSkillChoice] = useState({
-    index: "acid-arrow",
-    name: "Acid Arrow",
-    url: "/api/spells/acid-arrow",
+    index: "",
+    name: "",
+    url: "",
   });
+  const [details, setDetails] = useState({ desc: "" });
 
   useEffect(() => {
     console.log("effect triggered");
@@ -32,10 +33,17 @@ function App() {
     <div className="App">
       <div className="container">
         <div className="col-md-4">
-          <DDMenu spellNames={allSpells} spellIndex={["spellIndex"]} />
+          <DDMenu
+            spellNames={allSpells}
+            spellIndex={["spellIndex"]}
+            skillChoice={skillChoice}
+            setSkillChoice={setSkillChoice}
+          />
         </div>
         <div className="col-md-4">
           <SpellDetails
+            details={details}
+            setDetails={setDetails}
             skillChoice={skillChoice}
             setSkillChoice={setSkillChoice}
           />

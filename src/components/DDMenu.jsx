@@ -6,7 +6,11 @@ const DDMenu = (props) => {
   return (
     <DropdownButton id="dropdown-basic-button" title="All Spells">
       {props.spellNames.map((skill, i) => (
-        <SkillButton skill={skill} />
+        <SkillButton
+          skill={skill}
+          skillChoice={props.skillChoice}
+          setSkillChoice={props.setSkillChoice}
+        />
       ))}
     </DropdownButton>
   );

@@ -8,8 +8,21 @@ const SkillButton = (props) => {
     setSkill(props.skill);
   }, []);
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    props.setSkillChoice({
+      index: skill["index"],
+      name: skill["name"],
+      url: skill["url"],
+    });
+  };
+
   return (
-    <Dropdown.Item index={skill["index"]} href={skill["url"]}>
+    <Dropdown.Item
+      index={skill["index"]}
+      href={skill["url"]}
+      onClick={handleClick}
+    >
       {`${skill["name"]}`}
     </Dropdown.Item>
   );
