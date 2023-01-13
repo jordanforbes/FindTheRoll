@@ -36,3 +36,4 @@ https://stackoverflow.com/questions/45018338/javascript-fetch-api-how-to-save-ou
 assign data to variable for use outside //DONE
 
 dropped the express server and just moved to the react server. I'm able to put the information into a useState hook
+it may be a good idea to use redux here

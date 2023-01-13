@@ -1,34 +1,33 @@
-// import fetch from "node-fetch";
-import Express from "express";
-// import { fetchObj } from "../db/fetchObj.js";
-import { fetchSpells, fetchSpellByName } from "../src/DataFetch.js";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import path from "path";
-const app = Express();
-const port = 3000;
-const __filename = fileURLToPath(import.meta.url);
-console.log(__filename);
-const __dirname = dirname(__filename);
-console.log(__dirname);
+const express = require("express");
+const bodyParser = require("body-parser");
+const db = require("../db/db.json");
+const fs = require("fs");
 
-// const acidarrow = await fetchSpellByName("acid-arrow");
-//get damage at slot
-// console.log(acidarrow.damage.damage_at_slot_level["4"]);
-// console.log(allSpells["results"][0].index);
-const allSpells = await fetchSpells();
+const PORT = 3000;
 
-const spellId = allSpells["results"][1].index;
-const thisSpell = await fetchSpellByName(spellId);
-console.log("Spell Name: " + thisSpell.name);
+const app = express();
+app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname + "/public/index.html"));
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
 });
 
-// app.get("/", (req, res) => {
-//   res.send("Spell Name: " + thisSpell.name);
-// });
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+//routes
+app.get("/spell-list/", (req, res) => {
+  console.log("spell list triggered");
+  res.json(db);
+});
+
+//add spells to data store
+app.post("/spell-list", (req, res) => {
+  const dbCopy = [...db];
+
+  dbCopy.push(req.body);
+  fs.writeFileSync(
+    "db/db.json",
+    JSON.stringify(dbCopy),
+    (err) => err && console.error(err)
+  );
+
+  res.json({ data: dbCopy, message: null });
 });
