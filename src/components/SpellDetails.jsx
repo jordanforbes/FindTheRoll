@@ -1,14 +1,25 @@
+import { useEffect, useState } from "react";
+
 const SpellDetails = (props) => {
+  const [details, setDetails] = useState({ desc: "" });
+
+  const getDetails = () => {
+    fetch("https://www.dnd5eapi.co" + props.skillChoice["url"])
+      .then((res) => res.json())
+      .then((data) => {
+        setDetails({ desc: data["desc"] });
+      });
+  };
+
+  useEffect(() => {
+    getDetails();
+  }, []);
+
   return (
     <>
-      <h3>Name: Scorching Ray</h3>
-      <p>damage:</p>
-      <p> slot level 2: 2d6 </p>
+      <h3>Name: {props.skillChoice["name"]}</h3>
       <h3>Description:</h3>
-      <p>
-        "Make a ranged spell attack for each ray. On a hit, the target takes 2d6
-        fire damage."
-      </p>
+      <p>{details["desc"]}</p>
     </>
   );
 };

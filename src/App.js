@@ -5,17 +5,23 @@ import SpellDetails from "./components/SpellDetails.jsx";
 
 function App() {
   // const [loading, setLoading] = useState(true);
-  const [spell, setSpell] = useState([]);
+  const [allSpells, setAllSpells] = useState([]);
   // const [error, setError] = useState(false);
+  const [skillChoice, setSkillChoice] = useState({
+    index: "acid-arrow",
+    name: "Acid Arrow",
+    url: "/api/spells/acid-arrow",
+  });
 
   useEffect(() => {
     console.log("effect triggered");
-    fetch("/spell-list/")
+    fetch("https://www.dnd5eapi.co/api/spells/")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        setSpell(data);
+        // console.log(data);
+        setAllSpells(data["results"]);
       });
+    // console.log(allSpells);
   }, []);
 
   // useEffect(() => {
@@ -26,15 +32,13 @@ function App() {
     <div className="App">
       <div className="container">
         <div className="col-md-4">
-          {/* <DDMenu
-            spellNames={["spellNames"]}
-            spellIndex={["spellIndex"]}
-            currentSpell={currentSpell}
-            setCurrentSpell={setCurrentSpell}
-          /> */}
+          <DDMenu spellNames={allSpells} spellIndex={["spellIndex"]} />
         </div>
         <div className="col-md-4">
-          <SpellDetails />
+          <SpellDetails
+            skillChoice={skillChoice}
+            setSkillChoice={setSkillChoice}
+          />
         </div>
       </div>
     </div>

@@ -1,16 +1,12 @@
 import { Dropdown, DropdownButton } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import SkillButton from "./SkillButton";
 
 const DDMenu = (props) => {
-  // console.log(props.spellIndex);
-
-  const handleClick = () => {};
-
   return (
     <DropdownButton id="dropdown-basic-button" title="All Spells">
-      {props.spellNames.map((spell, i) => (
-        <Dropdown.Item href={`#/${props.spellIndex[i]}`}>
-          {`${spell}`}
-        </Dropdown.Item>
+      {props.spellNames.map((skill, i) => (
+        <SkillButton skill={skill} />
       ))}
     </DropdownButton>
   );
