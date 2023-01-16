@@ -7,20 +7,8 @@ const SkillButton = (props) => {
   const getSkillObj = () => {
     fetch("https://www.dnd5eapi.co" + props.skill["url"])
       .then((res) => res.json())
-      .then((data) =>
-        props.setSkillObj({
-          index: data["index"],
-          name: data["name"],
-          url: data["url"],
-          desc: data["desc"],
-          damage: data["damage"],
-          heal_at_slot_level: data["heal_at_slot_level"],
-          higher_level: data["higher_level"],
-          level: data["level"],
-        })
-      );
+      .then((data) => props.setSkillObj(data));
   };
-
   useEffect(() => {
     setSkill(props.skill);
     // console.log(skill);
@@ -29,10 +17,7 @@ const SkillButton = (props) => {
   const handleClick = (e) => {
     e.preventDefault();
     getSkillObj();
-    console.log("api object");
-    fetch("https://www.dnd5eapi.co" + props.skill["url"])
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    console.log(props.skillObj);
   };
 
   return (

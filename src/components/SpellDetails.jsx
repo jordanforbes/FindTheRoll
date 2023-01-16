@@ -7,7 +7,6 @@ const SpellDetails = (props) => {
     console.log("object changed to " + props.skillObj["name"]);
     setName(props.skillObj["name"]);
     setDesc(props.skillObj["desc"]);
-    console.log(name, desc);
   }, [props.skillObj]);
 
   return (
@@ -18,7 +17,7 @@ const SpellDetails = (props) => {
       <div className="row">
         <b>Description:</b>
       </div>
-      <div className="row">{" " + desc}</div>
+      <div className="row">{desc}</div>
       <div className="row">
         <b>damage:</b>
       </div>
