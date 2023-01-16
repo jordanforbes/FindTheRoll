@@ -50,7 +50,7 @@ function App() {
                 ))}
             </DropdownButton>
             <DropdownButton id="slotSelect" title="Spell Slot">
-              {Array(10)
+              {Array(9)
                 .fill(1)
                 .map((n, i) => (
                   <Dropdown.Item index={i + 1}>{i + 1}</Dropdown.Item>
