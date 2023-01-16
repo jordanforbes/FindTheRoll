@@ -4,48 +4,56 @@ import DDMenu from "./components/DDMenu.jsx";
 import SpellDetails from "./components/SpellDetails.jsx";
 
 function App() {
-  // const [loading, setLoading] = useState(true);
   const [allSpells, setAllSpells] = useState([]);
-  // const [error, setError] = useState(false);
-  const [skillChoice, setSkillChoice] = useState({
+  // const [skillChoice, setSkillChoice] = useState({
+  //   index: "",
+  //   name: "",
+  //   url: "",
+  // });
+  const [skillObj, setSkillObj] = useState({
     index: "",
     name: "",
     url: "",
+    desc: "",
+    damage: [],
+    heal_at_slot_level: [],
+    higher_level: [],
+    level: 0,
   });
-  const [details, setDetails] = useState({ desc: "" });
 
   useEffect(() => {
     console.log("effect triggered");
     fetch("https://www.dnd5eapi.co/api/spells/")
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
         setAllSpells(data["results"]);
       });
-    // console.log(allSpells);
   }, []);
 
-  // useEffect(() => {
-  //   fetch("/spells/", { method: "GET" }).then((res) => console.log(res.string));
-  // }, []);
+  useEffect(() => {
+    console.log("custom skill object");
+    console.log(skillObj);
+  }, [skillObj]);
 
   return (
     <div className="App">
       <div className="container">
+        <div className="col-md-1"></div>
         <div className="col-md-4">
           <DDMenu
             spellNames={allSpells}
-            spellIndex={["spellIndex"]}
-            skillChoice={skillChoice}
-            setSkillChoice={setSkillChoice}
+            // skillChoice={skillChoice}
+            // setSkillChoice={setSkillChoice}
+            skillObj={skillObj}
+            setSkillObj={setSkillObj}
           />
         </div>
         <div className="col-md-4">
           <SpellDetails
-            details={details}
-            setDetails={setDetails}
-            skillChoice={skillChoice}
-            setSkillChoice={setSkillChoice}
+            // skillChoice={skillChoice}
+            // setSkillChoice={setSkillChoice}
+            skillObj={skillObj}
+            setSkillObj={setSkillObj}
           />
         </div>
       </div>

@@ -10,6 +10,8 @@ const DDMenu = (props) => {
           skill={skill}
           skillChoice={props.skillChoice}
           setSkillChoice={props.setSkillChoice}
+          skillObj={props.skillObj}
+          setSkillObj={props.setSkillObj}
         />
       ))}
     </DropdownButton>

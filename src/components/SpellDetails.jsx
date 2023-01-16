@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react";
 
 const SpellDetails = (props) => {
-  const getDetails = () => {
-    fetch("https://www.dnd5eapi.co" + props.skillChoice["url"])
-      .then((res) => res.json())
-      .then((data) => {
-        props.setDetails({ desc: data["desc"] });
-      });
-  };
-
+  const [name, setName] = useState("");
+  const [desc, setDesc] = useState("");
   useEffect(() => {
-    getDetails();
-  }, [props.details]);
+    console.log("object changed to " + props.skillObj["name"]);
+    setName(props.skillObj["name"]);
+    setDesc(props.skillObj["desc"]);
+    console.log(name, desc);
+  }, [props.skillObj]);
 
   return (
-    <>
-      <h3>Name: {props.skillChoice["name"]}</h3>
-      <h3>Description:</h3>
-      <p>{props.details["desc"]}</p>
-    </>
+    <div className="skillDetails">
+      <div className="row">
+        <h3>Name: {name}</h3>
+      </div>
+      <div className="row">
+        <b>Description:</b>
+      </div>
+      <div className="row">{" " + desc}</div>
+      <div className="row">
+        <b>damage:</b>
+      </div>
+      {/* <div className="row">{" " + props.skillObj["dmg"]}</div> */}
+    </div>
   );
 };
 
