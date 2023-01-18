@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import SpellDetails from "../components/SpellDetails/SpellDetails.jsx";
-import SkillButton from "../components/SkillButton/SkillButton.jsx";
+import SkillButton from "../components/SkillButtonColumn/SkillButton/SkillButton.jsx";
 import StatDetails from "../components/StatDetails/StatDetails";
 import useDamage from "../hooks/useDamage";
+import SlotButton from "../components/SkillButtonColumn/SlotButton/SlotButton";
 
 function App() {
   const [allSpells, setAllSpells] = useState([]);
@@ -45,9 +46,6 @@ function App() {
     }
   }, [dmgObj]);
 
-  const handleSlotSelect = (slot) => {
-    setSpellSlot(slot);
-  };
   return (
     <div className="App">
       <div className="container">
@@ -85,25 +83,27 @@ function App() {
             </div>
 
             {dmgRoll === "level" ? (
+              // levels
               <div className="row">
-                <DropdownButton id="levelSelect" title="Level">
+                <DropdownButton id="levelSelect" title={`Level: ${charLevel}`}>
                   {Array(20)
                     .fill(1)
                     .map((n, i) => (
-                      <Dropdown.Item index={i + 1}>{i + 1}</Dropdown.Item>
+                      <SlotButton index={i + 1} setSpellSlot={setCharLevel} />
                     ))}
                 </DropdownButton>
               </div>
             ) : dmgRoll === "slots" ? (
+              // slots
               <div className="row">
                 <DropdownButton
                   id="slotSelect"
-                  title={`Spell Slot ${spellSlot}`}
+                  title={`Spell Slot: ${spellSlot}`}
                 >
                   {Array(9)
                     .fill(1)
                     .map((n, i) => (
-                      <Dropdown.Item index={i + 1}>{i + 1}</Dropdown.Item>
+                      <SlotButton index={i + 1} setSpellSlot={setSpellSlot} />
                     ))}
                 </DropdownButton>
               </div>
