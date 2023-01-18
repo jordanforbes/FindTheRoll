@@ -10,6 +10,9 @@ function App() {
   const [allSpells, setAllSpells] = useState([]);
   const [skillObj, setSkillObj] = useState();
   const [skillName, setSkillName] = useState("none");
+  const [charLevel, setCharLevel] = useState(1);
+  const [spellSlot, setSpellSlot] = useState(1);
+  const [dmgRoll, setDmgRoll] = useState("none");
 
   const dmgObj = useDamage(skillObj);
 
@@ -33,8 +36,18 @@ function App() {
 
   useEffect(() => {
     console.log("dmg obj", dmgObj);
+    if (dmgObj["slotRolls"] !== false || dmgObj["healSlots"] !== false) {
+      setDmgRoll("slots");
+    } else if (dmgObj["checksLevel"] !== false) {
+      setDmgRoll("level");
+    } else {
+      setDmgRoll("none");
+    }
   }, [dmgObj]);
 
+  const handleSlotSelect = (slot) => {
+    setSpellSlot(slot);
+  };
   return (
     <div className="App">
       <div className="container">
@@ -54,7 +67,9 @@ function App() {
             <StatDetails dmgObj={dmgObj} skillObj={skillObj} />
           </div>
 
+          {/* skill button column */}
           <div className="col-md-1 buttonColumn">
+            {/* select skill */}
             <div className="row">
               <DropdownButton id="dropdown-basic-button" title={`${skillName}`}>
                 {allSpells.map((skill, i) => (
@@ -69,25 +84,32 @@ function App() {
               </DropdownButton>
             </div>
 
-            <div className="row">
-              <DropdownButton id="levelSelect" title="Level">
-                {Array(20)
-                  .fill(1)
-                  .map((n, i) => (
-                    <Dropdown.Item index={i + 1}>{i + 1}</Dropdown.Item>
-                  ))}
-              </DropdownButton>
-            </div>
-
-            <div className="row">
-              <DropdownButton id="slotSelect" title="Spell Slot">
-                {Array(9)
-                  .fill(1)
-                  .map((n, i) => (
-                    <Dropdown.Item index={i + 1}>{i + 1}</Dropdown.Item>
-                  ))}
-              </DropdownButton>
-            </div>
+            {dmgRoll === "level" ? (
+              <div className="row">
+                <DropdownButton id="levelSelect" title="Level">
+                  {Array(20)
+                    .fill(1)
+                    .map((n, i) => (
+                      <Dropdown.Item index={i + 1}>{i + 1}</Dropdown.Item>
+                    ))}
+                </DropdownButton>
+              </div>
+            ) : dmgRoll === "slots" ? (
+              <div className="row">
+                <DropdownButton
+                  id="slotSelect"
+                  title={`Spell Slot ${spellSlot}`}
+                >
+                  {Array(9)
+                    .fill(1)
+                    .map((n, i) => (
+                      <Dropdown.Item index={i + 1}>{i + 1}</Dropdown.Item>
+                    ))}
+                </DropdownButton>
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
         </div>
       </div>
