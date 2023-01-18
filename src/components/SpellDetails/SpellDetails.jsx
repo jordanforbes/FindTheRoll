@@ -9,6 +9,7 @@ const SpellDetails = (props) => {
     setDesc(props.skillObj["desc"]);
     console.log("check desc");
     console.log(desc);
+    console.log(desc.length);
   }, [props.skillObj]);
 
   return (
@@ -20,14 +21,8 @@ const SpellDetails = (props) => {
         <b>Description:</b>
       </div>
       <div className="row">
-        {desc.map((line) => (
-          <p>{line}</p>
-        ))}
+        {desc.length > 1 ? desc.map((line) => <p>{line}</p>) : <p>{desc}</p>}
       </div>
-      <div className="row">
-        <b>damage:</b>
-      </div>
-      {/* <div className="row">{" " + props.skillObj["dmg"]}</div> */}
     </div>
   );
 };
