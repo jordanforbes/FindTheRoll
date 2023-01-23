@@ -85,6 +85,7 @@ function App() {
             {dmgRoll === "level" ? (
               // levels
               <div className="row">
+                Character Level:
                 <DropdownButton id="levelSelect" title={`Level: ${charLevel}`}>
                   {Array(20)
                     .fill(1)
@@ -96,15 +97,17 @@ function App() {
             ) : dmgRoll === "slots" ? (
               // slots
               <div className="row">
-                <DropdownButton
-                  id="slotSelect"
-                  title={`Spell Slot: ${spellSlot}`}
-                >
-                  {Array(9)
-                    .fill(1)
-                    .map((n, i) => (
-                      <SlotButton index={i + 1} setSpellSlot={setSpellSlot} />
-                    ))}
+                Spell Slot:
+                <DropdownButton id="slotSelect" title={`${spellSlot}`}>
+                  {console.log("slotrolls debug")}
+                  {/* {console.log(dmgObj.slotRolls.keys())} */}
+                  {Object.keys(dmgObj.slotRolls).map((n) => (
+                    <SlotButton
+                      index={n}
+                      setSpellSlot={setSpellSlot}
+                      dmgObj={dmgObj}
+                    />
+                  ))}
                 </DropdownButton>
               </div>
             ) : (
