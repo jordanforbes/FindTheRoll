@@ -17,15 +17,14 @@ questions to answer:
 for front end- where should the initial call go for the initial page load
 
 persistent data should be saved
-  where's it going to look for it?
-  -JSON file?
+where's it going to look for it?
+-JSON file?
 end result is to put on resume that I created a RESTful api that does GET, DELETE, POST, maybe PUT
 
 PUT, PATCH, or UPDATE would be used if spells are reordered
 
 pageination
-  -creates pages
-
+-creates pages
 
 step 1: consume api
 used fetch api
@@ -37,3 +36,5 @@ assign data to variable for use outside //DONE
 
 dropped the express server and just moved to the react server. I'm able to put the information into a useState hook
 it may be a good idea to use redux here
+
+I need to create a redux store because I'm only using one big state and it's annoying

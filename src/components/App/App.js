@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Dropdown, DropdownButton } from "react-bootstrap";
-import SpellDetails from "../components/SpellDetails/SpellDetails.jsx";
-import SkillButton from "../components/SkillButtonColumn/SkillButton/SkillButton.jsx";
-import StatDetails from "../components/StatDetails/StatDetails";
-import useDamage from "../hooks/useDamage";
-import SlotButton from "../components/SkillButtonColumn/SlotButton/SlotButton";
+import SpellDetails from "../SpellDetails/SpellDetails.jsx";
+import SkillButton from "../SkillButtonColumn/SkillButton/SkillButton.jsx";
+import StatDetails from "../StatDetails/StatDetails";
+import useDamage from "../../hooks/useDamage";
+import SlotButton from "../SkillButtonColumn/SlotButton/SlotButton";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeName,
+  revertName,
+} from "../../features/skillSelector/skillSelectorSlice";
+// const areScales = useSelector((state) => state.groupSelector.areScales);
 
 function App() {
   const [allSpells, setAllSpells] = useState([]);
@@ -15,16 +21,23 @@ function App() {
   const [spellSlot, setSpellSlot] = useState(1);
   const [dmgRoll, setDmgRoll] = useState("none");
 
+  const testSkillName = useSelector((state) => state.skillSelector.name);
   const dmgObj = useDamage(skillObj);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("effect triggered");
     fetch("https://www.dnd5eapi.co/api/spells/")
       .then((res) => res.json())
       .then((data) => {
         setAllSpells(data["results"]);
       });
   }, []);
+
+  useEffect(() => {
+    // dispatch(revertName());
+    console.log("$$$$$$$$$$$test skill name: " + testSkillName);
+    console.log("effect triggered");
+  }, [testSkillName]);
 
   useEffect(() => {
     console.log("og skill object", skillObj);
@@ -55,7 +68,15 @@ function App() {
         <div className="row">
           <div className="col-md-2 detailsColumn">
             {skillObj ? (
-              <SpellDetails skillObj={skillObj} setSkillObj={setSkillObj} />
+              <SpellDetails
+                skillObj={skillObj}
+                setSkillObj={setSkillObj}
+                spellSlot={spellSlot}
+                setSpellSlot={setSpellSlot}
+                dmgObj={dmgObj}
+                charLevel={charLevel}
+                setCharLevel={setCharLevel}
+              />
             ) : (
               "no"
             )}
