@@ -15,9 +15,6 @@ const SpellDetails = (props) => {
   return (
     <div className="skillDetails">
       <div className="row">
-        <h3>Name: {name}</h3>
-      </div>
-      <div className="row">
         <b>Description:</b>
       </div>
       <div className="row">

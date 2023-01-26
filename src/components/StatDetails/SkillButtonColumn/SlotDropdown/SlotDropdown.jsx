@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 const SlotDropdown = (props) => {
   const [selectedSlot, setSelectedSlot] = useState("no Selection");
   const [slotArray, setSlotArray] = useState();
-  const [selectedRoll, setSelectedRoll] = useState("");
 
   useEffect(() => {
     setSlotArray(props.dmgObj.slotRolls);
@@ -25,8 +24,8 @@ const SlotDropdown = (props) => {
           setSpellSlot={props.setSpellSlot}
           dmgObj={props.dmgObj}
           setSelectedSlot={setSelectedSlot}
-          selectedRoll={selectedRoll}
-          setSelectedRoll={setSelectedRoll}
+          selectedRoll={props.selectedRoll}
+          setSelectedRoll={props.setSelectedRoll}
         />
       ))}
     </DropdownButton>

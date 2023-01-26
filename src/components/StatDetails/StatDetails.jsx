@@ -1,34 +1,24 @@
 import { useState, useEffect } from "react";
 import SlotDropdown from "./SkillButtonColumn/SlotDropdown/SlotDropdown";
+import { Button } from "react-bootstrap";
 import SkillSelect from "./SkillButtonColumn/SkillSelect/SkillSelect";
+const defaultDmg = {
+  name: "test default",
+  hasDamage: true,
+  healSlots: false,
+  // checksLevel: { 1: "1d6", 5: "2d6", 11: "3d6", 17: "4d6" },
+  checksLevel: false,
+  damageType: "Acid",
+  slotRolls: { 1: "1d6", 5: "2d6", 11: "3d6", 17: "4d6" },
+};
 const StatDetails = (props) => {
-  // if(props.dmgObj[''])
   const [slotTitle, setSlotTitle] = useState("");
-  const [skill, setSkill] = useState({
-    name: "acrid Splash",
-    hasDamage: true,
-    healSlots: false,
-    // checksLevel: { 1: "1d6", 5: "2d6", 11: "3d6", 17: "4d6" },
-    checksLevel: false,
-    damageType: "Acid",
-    slotRolls: { 1: "1d6", 5: "2d6", 11: "3d6", 17: "4d6" },
-  });
-
+  const [skill, setSkill] = useState(defaultDmg);
+  const [selectedRoll, setSelectedRoll] = useState("");
   const [rollType, setRollType] = useState("none");
+  const [rollResult, setRollResult] = useState("");
 
-  const defaultDmg = {
-    name: "acrid Splash",
-    hasDamage: true,
-    healSlots: false,
-    // checksLevel: { 1: "1d6", 5: "2d6", 11: "3d6", 17: "4d6" },
-    checksLevel: false,
-    damageType: "Acid",
-    slotRolls: { 1: "1d6", 5: "2d6", 11: "3d6", 17: "4d6" },
-  };
-
-  // useEffect(() => {
-  //   setSkill(defaultDmg);
-  // }, []);
+  const droll = require("droll");
 
   useEffect(() => {
     props.dmgObj ? setSkill(props.dmgObj) : setSkill(defaultDmg);
@@ -41,6 +31,19 @@ const StatDetails = (props) => {
       ? setRollType("Spell Slot: ")
       : setRollType("No Additional Check");
   }, [skill]);
+
+  useEffect(() => {
+    setRollResult("Roll");
+  }, [selectedRoll]);
+
+  //droll test
+
+  const rollButton = () => {
+    console.log("%%%%%%%%%%%%% DROLL %%%%%%%%%%%%%");
+    let result = droll.roll(selectedRoll);
+    setRollResult(result.total);
+    console.log(rollResult);
+  };
 
   useEffect(() => {}, [skill]);
   return (
@@ -64,25 +67,31 @@ const StatDetails = (props) => {
           <tr>
             <th scope="row">{rollType} </th>
             <td>
-              <p>
-                {skill["checksLevel"] ? (
-                  <SlotDropdown
-                    dmgObj={props.dmgObj}
-                    spellSlot={props.charLevel}
-                    setSpellSlot={props.setCharLevel}
-                    skillName={props.skillName}
-                  />
-                ) : skill["slotRolls"] ? (
-                  <SlotDropdown
-                    dmgObj={props.dmgObj}
-                    spellSlot={props.spellSlot}
-                    setSpellSlot={props.setSpellSlot}
-                    skillName={props.skillName}
-                  />
-                ) : (
-                  "none"
-                )}
-              </p>
+              {skill["checksLevel"] || skill["slotRolls"] ? (
+                <SlotDropdown
+                  dmgObj={props.dmgObj}
+                  spellSlot={
+                    skill["checksLevel"] ? props.charLevel : props.spellSlot
+                  }
+                  setSpellSlot={
+                    skill["checksLevel"]
+                      ? props.setCharLevel
+                      : props.setSpellSlot
+                  }
+                  selectedRoll={selectedRoll}
+                  setSelectedRoll={setSelectedRoll}
+                  skillName={props.skillName}
+                />
+              ) : (
+                "none"
+              )}
+              {selectedRoll ? (
+                <Button label="Roll" onClick={rollButton}>
+                  {rollResult}
+                </Button>
+              ) : (
+                ""
+              )}
             </td>
           </tr>
           <tr>

@@ -78,9 +78,9 @@ function App() {
       <div className="container">
         <br />
         <div className="col-md-1"></div>
-        <div className="col-md-6"></div>
+        <div className="col-md-10"></div>
         <div className="row">
-          <div className="col-md-5 statsColumn">
+          <div className="col-md-6 statsColumn">
             <StatDetails
               dmgObj={dmgObj}
               skillObj={skillObj}
@@ -94,7 +94,7 @@ function App() {
               setSkillName={setSkillName}
             />
           </div>
-          <div className="col-md-2 detailsColumn">
+          <div className="col-md-4 detailsColumn">
             {skillObj ? (
               <SpellDetails
                 skillObj={skillObj}
