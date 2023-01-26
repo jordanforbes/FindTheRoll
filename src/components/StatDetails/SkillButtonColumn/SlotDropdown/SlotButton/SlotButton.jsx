@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 
 const SlotButton = (props) => {
   const [roll, setRoll] = useState("");
-  const dmgObj = { 2: "1d4", 3: "2d10" };
 
   useEffect(() => {
     console.log("slotbutton debug");
@@ -11,10 +10,12 @@ const SlotButton = (props) => {
       console.log(props.index + " " + props.dmgObj.slotRolls[props.index]);
       setRoll(props.dmgObj.slotRolls[props.index]);
     }
-  }, [dmgObj]);
+  }, [props.dmgObj]);
 
   const handleClick = () => {
     props.setSpellSlot(props.index);
+    props.setSelectedSlot(`${props.index}: ${roll}`);
+    props.setSelectedRoll(roll);
   };
   return (
     <Dropdown.Item index={props.index} onClick={handleClick}>

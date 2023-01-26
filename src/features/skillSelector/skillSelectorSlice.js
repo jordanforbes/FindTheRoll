@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+const dummyState = {
   name: "Acid Arrow",
   index: "acid-arrow",
   desc: [
@@ -44,20 +44,28 @@ const initialState = {
   // school: {index: 'evocation', name: 'Evocation', url: '/api/magic-schools/evocation'},
   // subclasses: (2) [{…}, {…}]
 };
-
+const initialState = {
+  name: "",
+  index: "",
+  desc: "",
+};
 export const skillSelectorSlice = createSlice({
   name: "skillSelector",
   initialState,
   reducers: {
-    changeName: (state) => {
-      state.name = "changed skillSelector state";
+    changeName: (state, action) => {
+      state.name = action.payload;
     },
-    revertName: (state) => {
-      state.name = "Acid Arrow";
+    changeIndex: (state, action) => {
+      state.index = action.payload;
+    },
+    changeDesc: (state, action) => {
+      state.desc = action.payload;
     },
   },
 });
 
-export const { changeName, revertName } = skillSelectorSlice.actions;
+export const { changeName, changeIndex, changeDesc } =
+  skillSelectorSlice.actions;
 
 export default skillSelectorSlice.reducer;

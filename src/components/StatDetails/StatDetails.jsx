@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import SlotButton from "../SkillButtonColumn/SlotButton/SlotButton";
-import { DropdownButton } from "react-bootstrap";
-
+import SlotDropdown from "./SkillButtonColumn/SlotDropdown/SlotDropdown";
+import SkillSelect from "./SkillButtonColumn/SkillSelect/SkillSelect";
 const StatDetails = (props) => {
   // if(props.dmgObj[''])
+  const [slotTitle, setSlotTitle] = useState("");
   const [skill, setSkill] = useState({
     name: "acrid Splash",
     hasDamage: true,
@@ -42,6 +42,7 @@ const StatDetails = (props) => {
       : setRollType("No Additional Check");
   }, [skill]);
 
+  useEffect(() => {}, [skill]);
   return (
     <div className="container">
       <p>Damaging</p>
@@ -50,7 +51,14 @@ const StatDetails = (props) => {
           <tr>
             <th scope="row">Name: </th>
             <td>
-              <p>{skill["name"]}</p>
+              <SkillSelect
+                allSpells={props.allSpells}
+                skillName={props.skillName}
+                setSkillName={props.setSkillName}
+                skillObj={props.skillObj}
+                skill={skill}
+                setSkillObj={props.setSkillObj}
+              />
             </td>
           </tr>
           <tr>
@@ -58,29 +66,19 @@ const StatDetails = (props) => {
             <td>
               <p>
                 {skill["checksLevel"] ? (
-                  <DropdownButton id="slotSelect" title={`${props.charLevel}`}>
-                    {console.log("charlev debug")}
-                    {/* {console.log(dmgObj.slotRolls.keys())} */}
-                    {Object.keys(props.dmgObj.checksLevel).map((n) => (
-                      <SlotButton
-                        index={n}
-                        setSpellSlot={props.setCharLevel}
-                        dmgObj={props.dmgObj}
-                      />
-                    ))}
-                  </DropdownButton>
+                  <SlotDropdown
+                    dmgObj={props.dmgObj}
+                    spellSlot={props.charLevel}
+                    setSpellSlot={props.setCharLevel}
+                    skillName={props.skillName}
+                  />
                 ) : skill["slotRolls"] ? (
-                  <DropdownButton id="slotSelect" title={`${props.spellSlot}`}>
-                    {console.log("slotrolls debug")}
-                    {/* {console.log(dmgObj.slotRolls.keys())} */}
-                    {Object.keys(props.dmgObj.slotRolls).map((n) => (
-                      <SlotButton
-                        index={n}
-                        setSpellSlot={props.setSpellSlot}
-                        dmgObj={props.dmgObj}
-                      />
-                    ))}
-                  </DropdownButton>
+                  <SlotDropdown
+                    dmgObj={props.dmgObj}
+                    spellSlot={props.spellSlot}
+                    setSpellSlot={props.setSpellSlot}
+                    skillName={props.skillName}
+                  />
                 ) : (
                   "none"
                 )}

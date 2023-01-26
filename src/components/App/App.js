@@ -2,14 +2,17 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import SpellDetails from "../SpellDetails/SpellDetails.jsx";
-import SkillButton from "../SkillButtonColumn/SkillButton/SkillButton.jsx";
+import SkillButton from "../StatDetails/SkillButtonColumn/SkillSelect/SkillButton/SkillButton.jsx";
 import StatDetails from "../StatDetails/StatDetails";
+import SlotDropdown from "../StatDetails/SkillButtonColumn/SlotDropdown/SlotDropdown";
 import useDamage from "../../hooks/useDamage";
-import SlotButton from "../SkillButtonColumn/SlotButton/SlotButton";
+import useSkill from "../../hooks/useSkill";
+import SlotButton from "../StatDetails/SkillButtonColumn/SlotDropdown/SlotButton/SlotButton";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeName,
-  revertName,
+  changeIndex,
+  changeDesc,
 } from "../../features/skillSelector/skillSelectorSlice";
 // const areScales = useSelector((state) => state.groupSelector.areScales);
 
@@ -21,10 +24,21 @@ function App() {
   const [spellSlot, setSpellSlot] = useState(1);
   const [dmgRoll, setDmgRoll] = useState("none");
 
-  const testSkillName = useSelector((state) => state.skillSelector.name);
+  const thisSkillName = useSelector((state) => state.skillSelector.name);
+  const thisSkillIndex = useSelector((state) => state.skillSelector.index);
+  const thisSkillDesc = useSelector((state) => state.skillSelector.desc);
   const dmgObj = useDamage(skillObj);
   const dispatch = useDispatch();
-
+  // useSkill({
+  //   name: "ahaha",
+  //   index: "changed-index",
+  //   desc: "changed description test blah blah blah foo bar baaz",
+  // });
+  const skillSelect = (skill) => {
+    dispatch(changeName(skill.name));
+    dispatch(changeIndex(skill.index));
+    dispatch(changeDesc(skill.desc));
+  };
   useEffect(() => {
     fetch("https://www.dnd5eapi.co/api/spells/")
       .then((res) => res.json())
@@ -35,14 +49,14 @@ function App() {
 
   useEffect(() => {
     // dispatch(revertName());
-    console.log("$$$$$$$$$$$test skill name: " + testSkillName);
-    console.log("effect triggered");
-  }, [testSkillName]);
+    console.log("&&&&&&&&&&app.js&&&&&&&&&&&&");
+    console.log(thisSkillName, thisSkillIndex, thisSkillDesc);
+  }, [thisSkillName]);
 
   useEffect(() => {
     console.log("og skill object", skillObj);
     if (skillObj) {
-      setSkillName(skillObj["name"]);
+      skillSelect(skillObj);
     } else {
       setSkillName("none");
     }
@@ -66,6 +80,20 @@ function App() {
         <div className="col-md-1"></div>
         <div className="col-md-6"></div>
         <div className="row">
+          <div className="col-md-5 statsColumn">
+            <StatDetails
+              dmgObj={dmgObj}
+              skillObj={skillObj}
+              setSkillObj={setSkillObj}
+              spellSlot={spellSlot}
+              setSpellSlot={setSpellSlot}
+              charLevel={charLevel}
+              setCharLevel={setCharLevel}
+              allSpells={allSpells}
+              skillName={skillName}
+              setSkillName={setSkillName}
+            />
+          </div>
           <div className="col-md-2 detailsColumn">
             {skillObj ? (
               <SpellDetails
@@ -76,63 +104,10 @@ function App() {
                 dmgObj={dmgObj}
                 charLevel={charLevel}
                 setCharLevel={setCharLevel}
+                skillName={skillName}
               />
             ) : (
               "no"
-            )}
-          </div>
-
-          <div className="col-md-3 statsColumn">
-            <StatDetails dmgObj={dmgObj} skillObj={skillObj} />
-          </div>
-
-          {/* skill button column */}
-          <div className="col-md-1 buttonColumn">
-            {/* select skill */}
-            <div className="row">
-              <DropdownButton id="dropdown-basic-button" title={`${skillName}`}>
-                {allSpells.map((skill, i) => (
-                  <SkillButton
-                    className="skillButton"
-                    key={i}
-                    skill={skill}
-                    skillObj={skillObj}
-                    setSkillObj={setSkillObj}
-                  />
-                ))}
-              </DropdownButton>
-            </div>
-
-            {dmgRoll === "level" ? (
-              // levels
-              <div className="row">
-                Character Level:
-                <DropdownButton id="levelSelect" title={`Level: ${charLevel}`}>
-                  {Array(20)
-                    .fill(1)
-                    .map((n, i) => (
-                      <SlotButton index={i + 1} setSpellSlot={setCharLevel} />
-                    ))}
-                </DropdownButton>
-              </div>
-            ) : dmgRoll === "slots" ? (
-              // slots
-              <div className="row">
-                Spell Slot:
-                <DropdownButton id="slotSelect" title={`${spellSlot}`}>
-                  {console.log("slotrolls debug")}
-                  {/* {console.log(dmgObj.slotRolls.keys())} */}
-                  {Object.keys(dmgObj.slotRolls).map((n) => (
-                    <SlotButton
-                      index={n}
-                      setSpellSlot={setSpellSlot}
-                      dmgObj={dmgObj}
-                    />
-                  ))}
-                </DropdownButton>
-              </div>
-            ) : (
-              <div></div>
             )}
           </div>
         </div>

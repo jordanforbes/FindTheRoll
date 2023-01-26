@@ -12,7 +12,7 @@ const SkillButton = (props) => {
   useEffect(() => {
     setSkill(props.skill);
     // console.log(skill);
-  }, []);
+  }, [skill]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -26,7 +26,7 @@ const SkillButton = (props) => {
       href={skill["url"]}
       onClick={handleClick}
     >
-      {`${skill["name"]}`}
+      {skill["name"]}
     </Dropdown.Item>
   );
 };
