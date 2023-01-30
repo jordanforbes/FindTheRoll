@@ -14,34 +14,41 @@ import {
   changeIndex,
   changeDesc,
   changeDamage,
+  changeLevel,
+  changeHigherLevel,
+  changeClasses,
+  changeUrl,
+  resetSkill,
 } from "../../features/skillSelector/skillSelectorSlice";
 // const areScales = useSelector((state) => state.groupSelector.areScales);
 
 function App() {
   const [allSpells, setAllSpells] = useState([]);
   const [skillObj, setSkillObj] = useState();
-  const [skillName, setSkillName] = useState("none");
   const [charLevel, setCharLevel] = useState(1);
   const [spellSlot, setSpellSlot] = useState(1);
-  const [dmgRoll, setDmgRoll] = useState("none");
 
-  const thisSkillName = useSelector((state) => state.skillSelector.name);
-  const thisSkillIndex = useSelector((state) => state.skillSelector.index);
-  const thisSkillDesc = useSelector((state) => state.skillSelector.desc);
-  const thisSkillDamage = useSelector((state) => state.skillSelector.damage);
-  const dmgObj = useDamage(skillObj);
   const dispatch = useDispatch();
-  // useSkill({
-  //   name: "ahaha",
-  //   index: "changed-index",
-  //   desc: "changed description test blah blah blah foo bar baaz",
-  // });
+  const thisSkillObj = useSelector((state) => state.skillSelector);
+
+  useEffect(() => {
+    console.log("%%%%%%%%% STORED SKILL OBJ $$$$$$$$$$");
+    console.log(thisSkillObj);
+  }, [skillObj]);
+  const dmgObj = useDamage(skillObj);
+
+  //saves skill gained from api call to the redux store
   const skillSelect = (skill) => {
     dispatch(changeName(skill.name));
     dispatch(changeIndex(skill.index));
     dispatch(changeDesc(skill.desc));
     dispatch(changeDamage(skill.damage));
+    dispatch(changeLevel(skill.level));
+    dispatch(changeUrl(skill.url));
+    dispatch(changeClasses(skill.classes));
+    dispatch(changeHigherLevel(skill.higher_level));
   };
+
   useEffect(() => {
     fetch("https://www.dnd5eapi.co/api/spells/")
       .then((res) => res.json())
@@ -51,34 +58,12 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // dispatch(revertName());
-    console.log("&&&&&&&&&&app.js&&&&&&&&&&&&");
-    console.log(thisSkillName);
-    console.log(thisSkillIndex);
-    console.log(thisSkillDesc);
-    console.log("should be damage");
-    console.log(thisSkillDamage);
-  }, [thisSkillName]);
-
-  useEffect(() => {
-    console.log("og skill object", skillObj);
     if (skillObj) {
       skillSelect(skillObj);
     } else {
-      setSkillName("none");
+      dispatch(resetSkill());
     }
   }, [skillObj]);
-
-  useEffect(() => {
-    console.log("dmg obj", dmgObj);
-    if (dmgObj["slotRolls"] !== false || dmgObj["healSlots"] !== false) {
-      setDmgRoll("slots");
-    } else if (dmgObj["checksLevel"] !== false) {
-      setDmgRoll("level");
-    } else {
-      setDmgRoll("none");
-    }
-  }, [dmgObj]);
 
   return (
     <div className="App">
@@ -97,8 +82,7 @@ function App() {
               charLevel={charLevel}
               setCharLevel={setCharLevel}
               allSpells={allSpells}
-              skillName={skillName}
-              setSkillName={setSkillName}
+              thisSkillObj={thisSkillObj}
             />
           </div>
           <div className="col-md-4 detailsColumn">
@@ -111,10 +95,9 @@ function App() {
                 dmgObj={dmgObj}
                 charLevel={charLevel}
                 setCharLevel={setCharLevel}
-                skillName={skillName}
               />
             ) : (
-              "no"
+              ""
             )}
           </div>
         </div>
