@@ -62,10 +62,13 @@ export const skillSelectorSlice = createSlice({
     changeDesc: (state, action) => {
       state.desc = action.payload;
     },
+    changeDamage: (state, action) => {
+      state.damage = action.payload;
+    },
   },
 });
 
-export const { changeName, changeIndex, changeDesc } =
+export const { changeName, changeIndex, changeDesc, changeDamage } =
   skillSelectorSlice.actions;
 
 export default skillSelectorSlice.reducer;

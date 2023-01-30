@@ -13,6 +13,7 @@ import {
   changeName,
   changeIndex,
   changeDesc,
+  changeDamage,
 } from "../../features/skillSelector/skillSelectorSlice";
 // const areScales = useSelector((state) => state.groupSelector.areScales);
 
@@ -27,6 +28,7 @@ function App() {
   const thisSkillName = useSelector((state) => state.skillSelector.name);
   const thisSkillIndex = useSelector((state) => state.skillSelector.index);
   const thisSkillDesc = useSelector((state) => state.skillSelector.desc);
+  const thisSkillDamage = useSelector((state) => state.skillSelector.damage);
   const dmgObj = useDamage(skillObj);
   const dispatch = useDispatch();
   // useSkill({
@@ -38,6 +40,7 @@ function App() {
     dispatch(changeName(skill.name));
     dispatch(changeIndex(skill.index));
     dispatch(changeDesc(skill.desc));
+    dispatch(changeDamage(skill.damage));
   };
   useEffect(() => {
     fetch("https://www.dnd5eapi.co/api/spells/")
@@ -50,7 +53,11 @@ function App() {
   useEffect(() => {
     // dispatch(revertName());
     console.log("&&&&&&&&&&app.js&&&&&&&&&&&&");
-    console.log(thisSkillName, thisSkillIndex, thisSkillDesc);
+    console.log(thisSkillName);
+    console.log(thisSkillIndex);
+    console.log(thisSkillDesc);
+    console.log("should be damage");
+    console.log(thisSkillDamage);
   }, [thisSkillName]);
 
   useEffect(() => {

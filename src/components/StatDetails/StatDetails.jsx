@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import SlotDropdown from "./SkillButtonColumn/SlotDropdown/SlotDropdown";
 import { Button } from "react-bootstrap";
 import SkillSelect from "./SkillButtonColumn/SkillSelect/SkillSelect";
+import { useDispatch, useSelector } from "react-redux";
+import { changeName, changeIndex, changeDesc changeDamage } from "../../features/skillSelector/skillSelectorSlice";
 const defaultDmg = {
   name: "test default",
   hasDamage: true,
@@ -17,6 +19,13 @@ const StatDetails = (props) => {
   const [selectedRoll, setSelectedRoll] = useState("");
   const [rollType, setRollType] = useState("none");
   const [rollResult, setRollResult] = useState("");
+
+  const dispatch = useDispatch()
+
+  const thisSkillName = useSelector((state) => state.skillSelector.name);
+  const thisSkillIndex = useSelector((state) => state.skillSelector.index);
+  const thisSkillDesc = useSelector((state) => state.skillSelector.desc);
+  const thisSkillDamage = useSelector((state) => state.skillSelector.damage);
 
   const droll = require("droll");
 

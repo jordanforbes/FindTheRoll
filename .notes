@@ -38,3 +38,6 @@ dropped the express server and just moved to the react server. I'm able to put t
 it may be a good idea to use redux here
 
 I need to create a redux store because I'm only using one big state and it's annoying
+
+1/26
+time to connect the store to the rest of the application
