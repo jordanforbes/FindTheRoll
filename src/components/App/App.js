@@ -49,6 +49,7 @@ function App() {
     dispatch(changeHigherLevel(skill.higher_level));
   };
 
+  //acquires list of spells
   useEffect(() => {
     fetch("https://www.dnd5eapi.co/api/spells/")
       .then((res) => res.json())
@@ -71,8 +72,8 @@ function App() {
         <br />
         <div className="col-md-1"></div>
         <div className="col-md-10"></div>
-        <div className="row">
-          <div className="col-md-6 statsColumn">
+        <div className="col-md-4 ">
+          <div className="row statsColumn">
             <StatDetails
               dmgObj={dmgObj}
               skillObj={skillObj}
@@ -85,20 +86,22 @@ function App() {
               thisSkillObj={thisSkillObj}
             />
           </div>
-          <div className="col-md-4 detailsColumn">
-            {skillObj ? (
-              <SpellDetails
-                skillObj={skillObj}
-                setSkillObj={setSkillObj}
-                spellSlot={spellSlot}
-                setSpellSlot={setSpellSlot}
-                dmgObj={dmgObj}
-                charLevel={charLevel}
-                setCharLevel={setCharLevel}
-              />
-            ) : (
-              ""
-            )}
+          <div className="row">
+            <div className=" detailsColumn">
+              {skillObj ? (
+                <SpellDetails
+                  skillObj={skillObj}
+                  setSkillObj={setSkillObj}
+                  spellSlot={spellSlot}
+                  setSpellSlot={setSpellSlot}
+                  dmgObj={dmgObj}
+                  charLevel={charLevel}
+                  setCharLevel={setCharLevel}
+                />
+              ) : (
+                ""
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -1,33 +1,38 @@
 import SlotButton from "./SlotButton/SlotButton";
 import { DropdownButton } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const SlotDropdown = (props) => {
   const [selectedSlot, setSelectedSlot] = useState("no Selection");
-  const [slotArray, setSlotArray] = useState();
+  const [dmgProp, setDmgProp] = useState(false);
+  const thisSkillObj = useSelector((state) => state.skillSelector);
 
   useEffect(() => {
-    setSlotArray(props.dmgObj.slotRolls);
-    // setSelectedSlot(slotArray[0] + " " + slotArray[1]);
-    console.log("$$$$$$$$$$$$$$$$$$$$$$ slot array #############");
-    console.log(slotArray);
-  }, [props.dmgObj]);
-  useEffect(() => {
-    setSelectedSlot("no Selection");
-  }, [props.skillName]);
+    let dmg = thisSkillObj["damage"];
+    console.log("#@@@! finding damage source $!@R#");
+
+    dmg["damage_at_slot_level"]
+      ? setDmgProp(dmg["damage_at_slot_level"])
+      : dmg["damage_at_character_level"]
+      ? setDmgProp(dmg["damage_at_character_level"])
+      : setDmgProp(false);
+  }, [thisSkillObj]);
 
   return (
     <DropdownButton id="slotSelect" title={selectedSlot}>
-      {Object.keys(props.dmgObj.slotRolls).map((n) => (
-        <SlotButton
-          index={n}
-          setSpellSlot={props.setSpellSlot}
-          dmgObj={props.dmgObj}
-          setSelectedSlot={setSelectedSlot}
-          selectedRoll={props.selectedRoll}
-          setSelectedRoll={props.setSelectedRoll}
-        />
-      ))}
+      {dmgProp
+        ? Object.keys(dmgProp).map((n) => (
+            <SlotButton
+              index={n}
+              setSpellSlot={props.setSpellSlot}
+              dmgObj={props.dmgObj}
+              setSelectedSlot={setSelectedSlot}
+              selectedRoll={props.selectedRoll}
+              setSelectedRoll={props.setSelectedRoll}
+            />
+          ))
+        : ""}
     </DropdownButton>
   );
 };

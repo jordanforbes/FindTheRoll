@@ -27,7 +27,6 @@ const SkillButton = (props) => {
   const handleClick = (e) => {
     e.preventDefault();
     getSkillObj();
-    console.log(props.skillObj);
   };
 
   return (

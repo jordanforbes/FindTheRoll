@@ -41,3 +41,10 @@ I need to create a redux store because I'm only using one big state and it's ann
 
 1/26
 time to connect the store to the rest of the application
+
+1/30
+it appears that the skill change is on SkillButton.jsx but also on app.js
+the initial spell list is on App.js
+
+1/31
+parchment background attribution: 'Image by rawpixel.com on Freepik'

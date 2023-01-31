@@ -3,7 +3,12 @@ import SlotDropdown from "./SkillButtonColumn/SlotDropdown/SlotDropdown";
 import { Button } from "react-bootstrap";
 import SkillSelect from "./SkillButtonColumn/SkillSelect/SkillSelect";
 import { useDispatch, useSelector } from "react-redux";
-import { changeName, changeIndex, changeDesc changeDamage } from "../../features/skillSelector/skillSelectorSlice";
+// import {
+//   changeName,
+//   changeIndex,
+//   changeDesc,
+//   changeDamage,
+// } from "../../features/skillSelector/skillSelectorSlice";
 const defaultDmg = {
   name: "test default",
   hasDamage: true,
@@ -20,12 +25,9 @@ const StatDetails = (props) => {
   const [rollType, setRollType] = useState("none");
   const [rollResult, setRollResult] = useState("");
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const thisSkillName = useSelector((state) => state.skillSelector.name);
-  const thisSkillIndex = useSelector((state) => state.skillSelector.index);
-  const thisSkillDesc = useSelector((state) => state.skillSelector.desc);
-  const thisSkillDamage = useSelector((state) => state.skillSelector.damage);
+  const thisSkillObj = useSelector((state) => state.skillSelector);
 
   const droll = require("droll");
 
@@ -48,10 +50,8 @@ const StatDetails = (props) => {
   //droll test
 
   const rollButton = () => {
-    console.log("%%%%%%%%%%%%% DROLL %%%%%%%%%%%%%");
     let result = droll.roll(selectedRoll);
     setRollResult(result.total);
-    console.log(rollResult);
   };
 
   useEffect(() => {}, [skill]);
@@ -65,8 +65,6 @@ const StatDetails = (props) => {
             <td>
               <SkillSelect
                 allSpells={props.allSpells}
-                skillName={props.skillName}
-                setSkillName={props.setSkillName}
                 skillObj={props.skillObj}
                 skill={skill}
                 setSkillObj={props.setSkillObj}
@@ -87,6 +85,7 @@ const StatDetails = (props) => {
                       ? props.setCharLevel
                       : props.setSpellSlot
                   }
+                  thisSkillObj={props.thisSkillObj}
                   selectedRoll={selectedRoll}
                   setSelectedRoll={setSelectedRoll}
                   skillName={props.skillName}
@@ -106,10 +105,7 @@ const StatDetails = (props) => {
           <tr>
             <th scope="row">Damage Type: </th>
             <td>
-              <p>
-                {console.log("damagetype debug", skill["damageType"])}
-                {skill["damageType"]}
-              </p>
+              <p>{skill["damageType"]}</p>
             </td>
           </tr>
         </tbody>

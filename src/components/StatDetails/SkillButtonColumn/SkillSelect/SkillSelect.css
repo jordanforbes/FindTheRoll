@@ -1,0 +1,11 @@
+.skilDropdown {
+  height: 300px;
+  overflow: auto;
+}
+.skillDropdown  {
+
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+
+}

@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
+import "./SpellDetails.css";
 
 const SpellDetails = (props) => {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   useEffect(() => {
-    console.log("object changed to " + props.skillObj["name"]);
     setName(props.skillObj["name"]);
     setDesc(props.skillObj["desc"]);
-    console.log("check desc");
-    console.log(desc);
-    console.log(desc.length);
   }, [props.skillObj]);
 
   return (
@@ -17,7 +14,7 @@ const SpellDetails = (props) => {
       <div className="row">
         <b>Description:</b>
       </div>
-      <div className="row">
+      <div className="row descRow">
         {desc.length > 1 ? desc.map((line) => <p>{line}</p>) : <p>{desc}</p>}
       </div>
     </div>

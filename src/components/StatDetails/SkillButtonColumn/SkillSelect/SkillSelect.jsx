@@ -1,9 +1,14 @@
 import { DropdownButton } from "react-bootstrap";
 import SkillButton from "./SkillButton/SkillButton";
+import "./SkillSelect.css";
 
 const SkillSelect = (props) => {
   return (
-    <DropdownButton id="dropdown-basic-button" title={props.skill["name"]}>
+    <DropdownButton
+      className="skillDropdown"
+      id="dropdown-basic-button"
+      title={props.skill["name"]}
+    >
       {props.allSpells.map((skill, i) => (
         <SkillButton
           className="skillButton"
