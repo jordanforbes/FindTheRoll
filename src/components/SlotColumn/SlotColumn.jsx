@@ -1,7 +1,6 @@
 import "./SlotColumn.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
 import AllSlots from "./AllSlots/AllSlots";
 import NoSlots from "./NoSlots/NoSlots";
 

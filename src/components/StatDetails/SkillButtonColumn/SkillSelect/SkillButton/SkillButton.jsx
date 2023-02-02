@@ -8,15 +8,19 @@ import {
   changeDamage,
 } from "../../../../../features/skillSelector/skillSelectorSlice";
 import "./SkillButton.css";
-// import useSkill from "../../../../../hooks/useSkill";
+
 const SkillButton = (props) => {
   const [skill, setSkill] = useState({});
   const dispatch = useDispatch();
+
+  //queries api for the specific skill object
+  //which contains useful data such as slots and rolls
   const getSkillObj = () => {
     fetch("https://www.dnd5eapi.co" + props.skill["url"])
       .then((res) => res.json())
       .then((data) => props.setSkillObj(data));
   };
+
   useEffect(() => {
     setSkill(props.skill);
     dispatch(changeName(props.skill.name ? props.skill.name : false));

@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import { Dropdown, DropdownButton } from "react-bootstrap";
 import SpellDetails from "../SpellDetails/SpellDetails.jsx";
 import SkillColumn from "../SkillColumn/SkillColumn";
-import SkillButton from "../StatDetails/SkillButtonColumn/SkillSelect/SkillButton/SkillButton.jsx";
 import StatDetails from "../StatDetails/StatDetails";
-import SlotDropdown from "../StatDetails/SkillButtonColumn/SlotDropdown/SlotDropdown";
-import useDamage from "../../hooks/useDamage";
-import useSkill from "../../hooks/useSkill";
-import SlotButton from "../StatDetails/SkillButtonColumn/SlotDropdown/SlotButton/SlotButton";
+import RollColumn from "../RollColumn/RollColumn";
 import SlotColumn from "../SlotColumn/SlotColumn";
-import { useDispatch, useSelector } from "react-redux";
+import useDamage from "../../hooks/useDamage";
 import {
   changeName,
   changeIndex,
@@ -22,8 +18,6 @@ import {
   changeUrl,
   resetSkill,
 } from "../../features/skillSelector/skillSelectorSlice";
-// const areScales = useSelector((state) => state.groupSelector.areScales);
-import droll from "droll";
 
 function App() {
   const [allSpells, setAllSpells] = useState([]);
@@ -39,6 +33,8 @@ function App() {
     console.log("%%%%%%%%% STORED SKILL OBJ $$$$$$$$$$");
     console.log(thisSkillObj);
   }, [skillObj]);
+
+  //TODO: remove the damage object from the app as a whole
   const dmgObj = useDamage(skillObj);
 
   //saves skill gained from api call to the redux store
@@ -54,6 +50,9 @@ function App() {
   };
 
   //acquires list of spells
+  //--binds list to AllSpells hook
+  //the actual selected spell object is recieved
+  //in the 'SkillButton.jsx' component file
   useEffect(() => {
     fetch("https://www.dnd5eapi.co/api/spells/")
       .then((res) => res.json())
@@ -62,6 +61,17 @@ function App() {
       });
   }, []);
 
+  // TODO: make this query the back end database
+  // //recieves local database and logs data. Does not work
+  // useEffect(() => {
+  //   console.log("!@($ LOCAL DATABASE QUERY $282345");
+  //   fetch("../../db/db.json")
+  //     .then((res) => res.json())
+  //     .then((json) => console.log(json));
+  // });
+
+  //if there is a skill object then it is bound to the SkillSelect hook
+  //  otherwise it just resets the value
   useEffect(() => {
     if (skillObj) {
       skillSelect(skillObj);
@@ -69,23 +79,6 @@ function App() {
       dispatch(resetSkill());
     }
   }, [skillObj]);
-
-  const RollColumn = (props) => {
-    const [rollResult, setRollResult] = useState(-1);
-    useEffect(() => {
-      let temp = droll.roll(props.roll);
-      console.log("props.roll", props.roll);
-      console.log("temp", temp);
-      setRollResult(droll.roll(props.roll));
-      console.log(rollResult);
-    }, [props.roll]);
-    return (
-      <div className="col-md-1 rollColumn">
-        <h4>Roll</h4>
-        <h2>{rollResult.total}</h2>
-      </div>
-    );
-  };
 
   return (
     <div className="App">
