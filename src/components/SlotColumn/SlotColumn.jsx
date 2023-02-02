@@ -2,9 +2,12 @@ import "./SlotColumn.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
+import AllSlots from "./AllSlots/AllSlots";
+import NoSlots from "./NoSlots/NoSlots";
+
 const SlotColumn = (props) => {
   const thisSkillObj = useSelector((state) => state.skillSelector);
-
+  const [areSlots, setAreSlots] = useState(false);
   const [openSlots, setOpenSlots] = useState({
     8: "8d44",
     20: "2d39",
@@ -36,7 +39,10 @@ const SlotColumn = (props) => {
   useEffect(() => {
     try {
       if (thisSkillObj["damage"]["damage_at_slot_level"]) {
+        setAreSlots(true);
         setOpenSlots(thisSkillObj["damage"]["damage_at_slot_level"]);
+      } else {
+        setAreSlots(false);
       }
     } catch (e) {
       console.log(e);
@@ -47,40 +53,18 @@ const SlotColumn = (props) => {
     changeKeys();
   }, [openSlots]);
 
-  const SingleSlot = (props) => {
-    console.log(props);
-    const handleClick = () => {
-      props.setRoll(props.roll);
-    };
-    return (
-      <>
-        {props.slot}: <Button onClick={handleClick}>{props.roll}</Button>
-      </>
-    );
-  };
-
-  const AllSlots = (props) => {
-    return keySlots.map((i) => (
-      <>
-        <p>
-          <SingleSlot
-            setRoll={props.setRoll}
-            slot={i}
-            roll={props.openSlots[i]}
-          />
-        </p>
-      </>
-    ));
-  };
-
   return (
     <div className="col-md-2 slotColumn">
       <h4>Spell Slots</h4>
-      <AllSlots
-        setRoll={props.setRoll}
-        openSlots={openSlots}
-        keySlots={keySlots}
-      />
+      {areSlots ? (
+        <AllSlots
+          setRoll={props.setRoll}
+          openSlots={openSlots}
+          keySlots={keySlots}
+        />
+      ) : (
+        <NoSlots />
+      )}
     </div>
   );
 };
