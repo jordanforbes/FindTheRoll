@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import SpellDetails from "../SpellDetails/SpellDetails.jsx";
+import SkillColumn from "../SkillColumn/SkillColumn";
 import SkillButton from "../StatDetails/SkillButtonColumn/SkillSelect/SkillButton/SkillButton.jsx";
 import StatDetails from "../StatDetails/StatDetails";
 import SlotDropdown from "../StatDetails/SkillButtonColumn/SlotDropdown/SlotDropdown";
 import useDamage from "../../hooks/useDamage";
 import useSkill from "../../hooks/useSkill";
 import SlotButton from "../StatDetails/SkillButtonColumn/SlotDropdown/SlotButton/SlotButton";
+import SlotColumn from "../SlotColumn/SlotColumn";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeName,
@@ -70,9 +72,12 @@ function App() {
     <div className="App">
       <div className="container">
         <br />
-        <div className="col-md-1"></div>
-        <div className="col-md-10"></div>
-        <div className="col-md-4 ">
+        <SkillColumn
+          allSpells={allSpells}
+          skillObj={skillObj}
+          setSkillObj={setSkillObj}
+        />
+        <div className="col-md-6 ">
           <div className="row statsColumn">
             <StatDetails
               dmgObj={dmgObj}
@@ -104,6 +109,7 @@ function App() {
             </div>
           </div>
         </div>
+        <SlotColumn />
       </div>
     </div>
   );

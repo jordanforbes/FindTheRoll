@@ -1,0 +1,14 @@
+.allSpells {
+}
+.skillColumn {
+  max-height: 500px;
+  overflow: auto;
+  display: block;
+  float: left;
+}
+
+.skillSearch {
+  height: 40px;
+  background-color: white;
+  cursor: text;
+}

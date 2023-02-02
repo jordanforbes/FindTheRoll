@@ -24,7 +24,7 @@ const StatDetails = (props) => {
   const [selectedRoll, setSelectedRoll] = useState("");
   const [rollType, setRollType] = useState("none");
   const [rollResult, setRollResult] = useState("");
-
+  const [skillName, setSkillName] = useState("");
   const dispatch = useDispatch();
 
   const thisSkillObj = useSelector((state) => state.skillSelector);
@@ -54,52 +54,17 @@ const StatDetails = (props) => {
     setRollResult(result.total);
   };
 
-  useEffect(() => {}, [skill]);
+  useEffect(() => {
+    skill.name ? setSkillName(skill.name) : setSkillName("No Skill");
+  }, [skill]);
   return (
     <div className="container">
-      <p>Damaging</p>
       <table className="table statsTable">
         <tbody>
           <tr>
             <th scope="row">Name: </th>
             <td>
-              <SkillSelect
-                allSpells={props.allSpells}
-                skillObj={props.skillObj}
-                skill={skill}
-                setSkillObj={props.setSkillObj}
-              />
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">{rollType} </th>
-            <td>
-              {skill["checksLevel"] || skill["slotRolls"] ? (
-                <SlotDropdown
-                  dmgObj={props.dmgObj}
-                  spellSlot={
-                    skill["checksLevel"] ? props.charLevel : props.spellSlot
-                  }
-                  setSpellSlot={
-                    skill["checksLevel"]
-                      ? props.setCharLevel
-                      : props.setSpellSlot
-                  }
-                  thisSkillObj={props.thisSkillObj}
-                  selectedRoll={selectedRoll}
-                  setSelectedRoll={setSelectedRoll}
-                  skillName={props.skillName}
-                />
-              ) : (
-                "none"
-              )}
-              {selectedRoll ? (
-                <Button label="Roll" onClick={rollButton}>
-                  {rollResult}
-                </Button>
-              ) : (
-                ""
-              )}
+              <h3>{skillName}</h3>
             </td>
           </tr>
           <tr>

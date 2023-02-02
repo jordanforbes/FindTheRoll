@@ -7,6 +7,7 @@ import {
   changeDesc,
   changeDamage,
 } from "../../../../../features/skillSelector/skillSelectorSlice";
+import "./SkillButton.css";
 // import useSkill from "../../../../../hooks/useSkill";
 const SkillButton = (props) => {
   const [skill, setSkill] = useState({});
@@ -34,6 +35,7 @@ const SkillButton = (props) => {
       index={skill["index"]}
       href={skill["url"]}
       onClick={handleClick}
+      className="skillButton"
     >
       {skill["name"]}
     </Dropdown.Item>
