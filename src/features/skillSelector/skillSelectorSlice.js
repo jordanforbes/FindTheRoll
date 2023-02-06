@@ -8,6 +8,7 @@ const initialState = {
   damage: "",
   damage_type: "",
   damage_at_slot_level: "",
+  damage_at_character_level: "",
   higherLevel: "",
   level: "",
   classes: "",
@@ -34,8 +35,23 @@ export const skillSelectorSlice = createSlice({
 
     changeDamage: (state, action) => {
       state.damage = action.payload;
-      // console.log("damage redux debug");
-      // console.log(state.damage.damage_type);
+      console.log("damage debug");
+      if (state.damage) {
+        if (state.damage.damage_at_slot_level) {
+          console.log("slots");
+          console.log(state.damage.damage_at_slot_level);
+          state.damage_at_slot_level = state.damage.damage_at_slot_level;
+        } else if (state.damage.damage_at_character_level) {
+          console.log("levels");
+          console.log(state.damage.damage_at_character_level);
+          state.damage_at_character_level =
+            state.damage.damage_at_character_level;
+        } else {
+          console.log("no damage mods");
+        }
+      } else {
+        console.log("no damage");
+      }
     },
 
     changeLevel: (state, action) => {
@@ -51,14 +67,7 @@ export const skillSelectorSlice = createSlice({
     },
 
     resetSkill: (state) => {
-      state.name = "";
-      state.index = "";
-      state.desc = "";
-      state.url = "";
-      state.damage = "";
-      state.higherLevel = "";
-      state.level = "";
-      state.classes = "";
+      state = initialState;
     },
   },
 });
