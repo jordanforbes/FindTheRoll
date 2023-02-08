@@ -6,7 +6,10 @@ import NoSlots from "./NoSlots/NoSlots";
 
 const SlotColumn = (props) => {
   const thisSkillObj = useSelector((state) => state.skillSelector);
+  const slotDamage = useSelector((state) => state.damage_at_slot_level);
+  const levelDamage = useSelector((state) => state.damage_at_character_level);
   const [areSlots, setAreSlots] = useState(false);
+  const [title, setTitle] = useState("");
   const [openSlots, setOpenSlots] = useState({
     8: "8d44",
     20: "2d39",
@@ -33,16 +36,28 @@ const SlotColumn = (props) => {
     console.log(Object.values(openSlots));
     changeKeys();
     console.log(keySlots);
+
+    slotDamage
+      ? setTitle("Spell Slots")
+      : levelDamage
+      ? setTitle("Character Level")
+      : setTitle("No Damage Modifier");
   }, []);
 
   useEffect(() => {
     try {
-      if (thisSkillObj["damage"]["damage_at_slot_level"]) {
-        setAreSlots(true);
-        setOpenSlots(thisSkillObj["damage"]["damage_at_slot_level"]);
-      } else {
-        setAreSlots(false);
-      }
+      // if (slotDamage) {
+      //   setAreSlots(true);
+      //   setOpenSlots(slotDamage);
+      // } else {
+      //   setAreSlots(false);
+      // }
+
+      slotDamage
+        ? setOpenSlots(slotDamage) && setAreSlots(true)
+        : levelDamage
+        ? setOpenSlots(levelDamage) && setAreSlots(false)
+        : setOpenSlots(false);
     } catch (e) {
       console.log(e);
     }
@@ -54,7 +69,7 @@ const SlotColumn = (props) => {
 
   return (
     <div className="col-md-2 slotColumn">
-      <h4>Spell Slots</h4>
+      <h4>{title}</h4>
       {areSlots ? (
         <AllSlots
           setRoll={props.setRoll}

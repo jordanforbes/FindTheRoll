@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "react-bootstrap";
 import "./App.css";
 import SpellDetails from "../SpellDetails/SpellDetails.jsx";
 import SkillColumn from "../SkillColumn/SkillColumn";
 import StatDetails from "../StatDetails/StatDetails";
 import RollColumn from "../RollColumn/RollColumn";
 import SlotColumn from "../SlotColumn/SlotColumn";
+import SpellBook from "../SpellBook/SpellBook";
 import useDamage from "../../hooks/useDamage";
 import {
   changeName,
@@ -18,7 +20,7 @@ import {
   changeUrl,
   resetSkill,
 } from "../../features/skillSelector/skillSelectorSlice";
-
+import { writeSpell } from "../../features/spellBookSelector/spellBookSelectorSlice";
 function App() {
   const [allSpells, setAllSpells] = useState([]);
   const [skillObj, setSkillObj] = useState();
@@ -28,6 +30,7 @@ function App() {
 
   const dispatch = useDispatch();
   const thisSkillObj = useSelector((state) => state.skillSelector);
+  const spellBook = useSelector((state) => state.spellBook);
 
   useEffect(() => {
     console.log("%%%%%%%%% STORED SKILL OBJ $$$$$$$$$$");
@@ -49,26 +52,23 @@ function App() {
     dispatch(changeHigherLevel(skill.higher_level));
   };
 
+  const saveToSpellBook = () => {
+    dispatch(writeSpell(thisSkillObj));
+    console.log(spellBook);
+  };
   //acquires list of spells
   //--binds list to AllSpells hook
   //the actual selected spell object is recieved
   //in the 'SkillButton.jsx' component file
   useEffect(() => {
+    console.log("$$$$$$$$$$$$$$$$ spell book");
+    console.log(spellBook);
     fetch("https://www.dnd5eapi.co/api/spells/")
       .then((res) => res.json())
       .then((data) => {
         setAllSpells(data["results"]);
       });
   }, []);
-
-  // TODO: make this query the back end database
-  // //recieves local database and logs data. Does not work
-  // useEffect(() => {
-  //   console.log("!@($ LOCAL DATABASE QUERY $282345");
-  //   fetch("../../db/db.json")
-  //     .then((res) => res.json())
-  //     .then((json) => console.log(json));
-  // });
 
   //if there is a skill object then it is bound to the SkillSelect hook
   //  otherwise it just resets the value
@@ -92,6 +92,9 @@ function App() {
           />
           <div className="col-md-6 ">
             <div className="row statsColumn">
+              <Button onClick={saveToSpellBook} class="btn">
+                Save
+              </Button>
               <StatDetails
                 dmgObj={dmgObj}
                 skillObj={skillObj}
@@ -124,6 +127,9 @@ function App() {
           </div>
           <SlotColumn setRoll={setRoll} />
           <RollColumn roll={roll} />
+        </div>
+        <div className="row">
+          <SpellBook skillObj={skillObj} setSkillObj={setSkillObj} />
         </div>
       </div>
     </div>
