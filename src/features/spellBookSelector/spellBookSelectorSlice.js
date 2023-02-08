@@ -1,25 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = [
-  {
-    uuid: 1111,
-    index: "acid-arrow",
-    name: "Acid Arrow",
-    url: "/api/spells/acid-arrow",
-  },
-  {
-    uuid: 1111,
-    index: "scorching-ray",
-    name: "Scorching Ray",
-    url: "/api/spells/scorching-ray",
-  },
-  {
-    uuid: 1112,
-    index: "aid",
-    name: "Aid",
-    url: "/api/spells/aid",
-  },
-];
+const initialState = {
+  book: [
+    {
+      uuid: 1111,
+      index: "acid-arrow",
+      name: "Acid Arrow",
+      url: "/api/spells/acid-arrow",
+    },
+    {
+      uuid: 1111,
+      index: "scorching-ray",
+      name: "Scorching Ray",
+      url: "/api/spells/scorching-ray",
+    },
+    {
+      uuid: 1112,
+      index: "aid",
+      name: "Aid",
+      url: "/api/spells/aid",
+    },
+  ],
+};
 export const spellBookSelectorSlice = createSlice({
   name: "spellBookSelector",
   initialState,
@@ -27,7 +29,7 @@ export const spellBookSelectorSlice = createSlice({
     writeSpell: (state, action) => {
       console.log("writespell action");
       console.log(action);
-      state.push({
+      state.book.push({
         uuid: 1111,
         index: action.payload.index,
         name: action.payload.name,
@@ -35,7 +37,7 @@ export const spellBookSelectorSlice = createSlice({
       });
     },
     deleteSpell: (state, action) => {
-      console.log(state.shift());
+      state.book = state.book.filter((e) => e.index !== action.payload.index);
     },
   },
 });

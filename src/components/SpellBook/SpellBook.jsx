@@ -20,7 +20,7 @@ const SpellBook = (props) => {
   return (
     <div>
       <div className="row">spellBook</div>
-      {spellBook.map((spell) => (
+      {spellBook.book.map((spell) => (
         <SpellEntry
           skillObj={props.skillObj}
           setSkillObj={props.setSkillObj}
