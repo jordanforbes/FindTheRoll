@@ -1,4 +1,4 @@
-import SkillButton from "../StatDetails/SkillButtonColumn/SkillSelect/SkillButton/SkillButton";
+import SkillButton from "../SlotColumn/SkillButton/SkillButton";
 import "./SkillColumn.css";
 
 const SkillColumn = (props) => {
@@ -12,6 +12,7 @@ const SkillColumn = (props) => {
             key={i}
             skill={skill}
             skillObj={props.skillObj}
+            getSkillObj={props.getSkillObj}
             setSkillObj={props.setSkillObj}
           />
         ))}

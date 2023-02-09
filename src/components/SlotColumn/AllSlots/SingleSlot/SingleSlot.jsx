@@ -1,13 +1,20 @@
 import { Button } from "react-bootstrap";
+import droll from "droll";
 
 const SingleSlot = (props) => {
   console.log(props);
   const handleClick = () => {
+    droll.roll(props.roll);
     props.setRoll(props.roll);
   };
+
   return (
     <>
-      {props.slot}: <Button onClick={handleClick}>{props.roll}</Button>
+      <div className="row">
+        <Button className="btn-warning" onClick={handleClick}>
+          {props.slot}: {props.roll}
+        </Button>
+      </div>
     </>
   );
 };

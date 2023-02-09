@@ -26,7 +26,6 @@ const SlotDropdown = (props) => {
             <SlotButton
               index={n}
               setSpellSlot={props.setSpellSlot}
-              dmgObj={props.dmgObj}
               setSelectedSlot={setSelectedSlot}
               selectedRoll={props.selectedRoll}
               setSelectedRoll={props.setSelectedRoll}

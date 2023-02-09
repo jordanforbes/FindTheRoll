@@ -37,16 +37,16 @@ export const skillSelectorSlice = createSlice({
 
     changeDamage: (state, action) => {
       state.damage = action.payload;
-      // console.log("damage debug");
+      console.log("damage debug");
       if (state.damage) {
         if (state.damage.damage_at_slot_level) {
-          // console.log("slots");
-          // console.log(state.damage.damage_at_slot_level);
+          console.log("slots");
+          console.log(state.damage.damage_at_slot_level);
           state.damage_at_slot_level = state.damage.damage_at_slot_level;
           state.damage_at_character_level = false;
         } else if (state.damage.damage_at_character_level) {
-          // console.log("levels");
-          // console.log(state.damage.damage_at_character_level);
+          console.log("levels");
+          console.log(state.damage.damage_at_character_level);
           state.damage_at_character_level =
             state.damage.damage_at_character_level;
           state.damage_at_slot_level = false;

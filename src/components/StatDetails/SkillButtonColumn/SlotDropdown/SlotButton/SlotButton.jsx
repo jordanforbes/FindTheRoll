@@ -1,4 +1,4 @@
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
 const SlotButton = (props) => {

@@ -1,34 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+//TODO: prevent duplicate spells from being added
+
 const initialState = {
-  book: [
-    {
-      uuid: 1111,
-      index: "acid-arrow",
-      name: "Acid Arrow",
-      url: "/api/spells/acid-arrow",
-    },
-    {
-      uuid: 1111,
-      index: "scorching-ray",
-      name: "Scorching Ray",
-      url: "/api/spells/scorching-ray",
-    },
-    {
-      uuid: 1112,
-      index: "aid",
-      name: "Aid",
-      url: "/api/spells/aid",
-    },
-  ],
+  book: [],
 };
+
 export const spellBookSelectorSlice = createSlice({
   name: "spellBookSelector",
   initialState,
   reducers: {
     writeSpell: (state, action) => {
-      console.log("writespell action");
-      console.log(action);
       state.book.push({
         uuid: 1111,
         index: action.payload.index,

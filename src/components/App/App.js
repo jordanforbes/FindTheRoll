@@ -8,7 +8,6 @@ import StatDetails from "../StatDetails/StatDetails";
 import RollColumn from "../RollColumn/RollColumn";
 import SlotColumn from "../SlotColumn/SlotColumn";
 import SpellBook from "../SpellBook/SpellBook";
-import useDamage from "../../hooks/useDamage";
 import {
   changeName,
   changeIndex,
@@ -21,24 +20,23 @@ import {
   resetSkill,
 } from "../../features/skillSelector/skillSelectorSlice";
 import { writeSpell } from "../../features/spellBookSelector/spellBookSelectorSlice";
+
 function App() {
+  const thisSkillObj = useSelector((state) => state.skillSelector);
+  const spellBook = useSelector((state) => state.spellBook);
+  const dispatch = useDispatch();
   const [allSpells, setAllSpells] = useState([]);
   const [skillObj, setSkillObj] = useState();
   const [charLevel, setCharLevel] = useState(1);
   const [spellSlot, setSpellSlot] = useState(1);
-  const [roll, setRoll] = useState("1d20");
+  const [roll, setRoll] = useState("");
 
-  const dispatch = useDispatch();
-  const thisSkillObj = useSelector((state) => state.skillSelector);
-  const spellBook = useSelector((state) => state.spellBook);
-
-  useEffect(() => {
-    console.log("%%%%%%%%% STORED SKILL OBJ $$$$$$$$$$");
-    console.log(thisSkillObj);
-  }, [skillObj]);
-
-  //TODO: remove the damage object from the app as a whole
-  const dmgObj = useDamage(skillObj);
+  //queries api for the specific skill object
+  const getSkillObj = (spell) => {
+    fetch("https://www.dnd5eapi.co" + spell["url"])
+      .then((res) => res.json())
+      .then((data) => setSkillObj(data));
+  };
 
   //saves skill gained from api call to the redux store
   const skillSelect = (skill) => {
@@ -56,6 +54,7 @@ function App() {
     dispatch(writeSpell(thisSkillObj));
     console.log(spellBook);
   };
+
   //acquires list of spells
   //--binds list to AllSpells hook
   //the actual selected spell object is recieved
@@ -88,6 +87,7 @@ function App() {
           <SkillColumn
             allSpells={allSpells}
             skillObj={skillObj}
+            getSkillObj={getSkillObj}
             setSkillObj={setSkillObj}
           />
           <div className="col-md-6 ">
@@ -96,8 +96,8 @@ function App() {
                 Save
               </Button>
               <StatDetails
-                dmgObj={dmgObj}
                 skillObj={skillObj}
+                getSkillObj={getSkillObj}
                 setSkillObj={setSkillObj}
                 spellSlot={spellSlot}
                 setSpellSlot={setSpellSlot}
@@ -115,7 +115,6 @@ function App() {
                     setSkillObj={setSkillObj}
                     spellSlot={spellSlot}
                     setSpellSlot={setSpellSlot}
-                    dmgObj={dmgObj}
                     charLevel={charLevel}
                     setCharLevel={setCharLevel}
                   />
@@ -125,11 +124,21 @@ function App() {
               </div>
             </div>
           </div>
-          <SlotColumn setRoll={setRoll} />
-          <RollColumn roll={roll} />
+          <div className="col-md-2">
+            <div className="row">
+              <SlotColumn setRoll={setRoll} />
+            </div>
+            <div className="row">
+              <RollColumn roll={roll} />
+            </div>
+          </div>
         </div>
         <div className="row">
-          <SpellBook skillObj={skillObj} setSkillObj={setSkillObj} />
+          <SpellBook
+            skillObj={skillObj}
+            getSkillObj={getSkillObj}
+            setSkillObj={setSkillObj}
+          />
         </div>
       </div>
     </div>
