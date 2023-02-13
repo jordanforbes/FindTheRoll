@@ -1,5 +1,4 @@
 import SkillButton from "../SlotColumn/SkillButton/SkillButton";
-import "./SkillColumn.css";
 
 const SkillColumn = (props) => {
   return (

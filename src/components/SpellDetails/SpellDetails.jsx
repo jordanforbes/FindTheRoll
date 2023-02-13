@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./SpellDetails.css";
 
 const SpellDetails = (props) => {
   const [name, setName] = useState("");

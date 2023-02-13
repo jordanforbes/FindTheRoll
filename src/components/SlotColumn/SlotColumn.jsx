@@ -1,4 +1,3 @@
-import "./SlotColumn.css";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import AllSlots from "./AllSlots/AllSlots";

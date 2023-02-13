@@ -7,7 +7,6 @@ import {
   changeDesc,
   changeDamage,
 } from "../../../features/skillSelector/skillSelectorSlice";
-import "./SkillButton.css";
 
 const SkillButton = (props) => {
   const [skill, setSkill] = useState({});

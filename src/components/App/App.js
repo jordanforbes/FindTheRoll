@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
-import "./App.css";
 import SpellDetails from "../SpellDetails/SpellDetails.jsx";
 import SkillColumn from "../SkillColumn/SkillColumn";
 import StatDetails from "../StatDetails/StatDetails";

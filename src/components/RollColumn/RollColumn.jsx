@@ -5,7 +5,6 @@
 import { Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import droll from "droll";
-import "./RollColumn.css";
 
 const RollColumn = (props) => {
   const [rollResult, setRollResult] = useState(-1);

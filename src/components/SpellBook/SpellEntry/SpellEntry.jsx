@@ -2,7 +2,6 @@ import { Button, CloseButton } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 import { deleteSpell } from "../../../features/spellBookSelector/spellBookSelectorSlice";
-import "./SpellEntry.css";
 
 const SpellEntry = (props) => {
   const dispatch = useDispatch();
