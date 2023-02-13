@@ -36,7 +36,7 @@ const SlotColumn = (props) => {
       ? setTitle("Spell Slots")
       : levelDamage
       ? setTitle("Character Level")
-      : setTitle("No Damage Modifier");
+      : setTitle(false);
   }, []);
 
   useEffect(() => {

@@ -11,7 +11,7 @@ const SingleSlot = (props) => {
   return (
     <>
       <div className="row">
-        <Button className="btn-warning" onClick={handleClick}>
+        <Button className="slotSelect btn-warning" onClick={handleClick}>
           {props.slot}: {props.roll}
         </Button>
       </div>

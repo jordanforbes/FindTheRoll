@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
-import SpellDetails from "../SpellDetails/SpellDetails.jsx";
+import Description from "../Description/Description.jsx";
 import SkillColumn from "../SkillColumn/SkillColumn";
 import StatDetails from "../StatDetails/StatDetails";
 import RollColumn from "../RollColumn/RollColumn";
@@ -76,6 +76,7 @@ function App() {
     } else {
       dispatch(resetSkill());
     }
+    setRoll(false);
   }, [skillObj]);
 
   return (
@@ -109,7 +110,7 @@ function App() {
             <div className="row">
               <div className=" detailsColumn">
                 {skillObj ? (
-                  <SpellDetails
+                  <Description
                     skillObj={skillObj}
                     setSkillObj={setSkillObj}
                     spellSlot={spellSlot}
@@ -124,11 +125,9 @@ function App() {
             </div>
           </div>
           <div className="col-md-2">
+            <div className="row">{roll ? <RollColumn roll={roll} /> : ""}</div>
             <div className="row">
               <SlotColumn setRoll={setRoll} />
-            </div>
-            <div className="row">
-              <RollColumn roll={roll} />
             </div>
           </div>
         </div>

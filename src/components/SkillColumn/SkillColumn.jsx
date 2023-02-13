@@ -1,10 +1,14 @@
-import SkillButton from "../SlotColumn/SkillButton/SkillButton";
+import SkillButton from "./SkillButton/SkillButton";
+import SkillSearch from "./SkillSearch/SkillSearch";
+import { useState } from "react";
 
 const SkillColumn = (props) => {
+  const [searchInput, setSearchInput] = useState("");
+
   return (
     <div className=" col-md-3">
+      <SkillSearch />
       <div className="skillColumn">
-        <div className="skillSearch"></div>
         {props.allSpells.map((skill, i) => (
           <SkillButton
             className="skillButton"

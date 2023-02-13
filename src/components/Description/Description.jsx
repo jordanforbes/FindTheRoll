@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 
-const SpellDetails = (props) => {
-  const [name, setName] = useState("");
+const Description = (props) => {
   const [desc, setDesc] = useState("");
   useEffect(() => {
-    setName(props.skillObj["name"]);
     setDesc(props.skillObj["desc"]);
   }, [props.skillObj]);
 
@@ -20,4 +18,4 @@ const SpellDetails = (props) => {
   );
 };
 
-export default SpellDetails;
+export default Description;
