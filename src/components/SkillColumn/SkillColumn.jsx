@@ -1,15 +1,10 @@
 import SkillButton from "./SkillButton/SkillButton";
-import SkillSearch from "./SkillSearch/SkillSearch";
-import { useState } from "react";
 
 const SkillColumn = (props) => {
-  const [searchInput, setSearchInput] = useState("");
-
   return (
     <div className=" col-md-3">
-      <SkillSearch />
       <div className="skillColumn">
-        {props.allSpells.map((skill, i) => (
+        {props.spellList.map((skill, i) => (
           <SkillButton
             className="skillButton"
             key={i}
@@ -17,6 +12,8 @@ const SkillColumn = (props) => {
             skillObj={props.skillObj}
             getSkillObj={props.getSkillObj}
             setSkillObj={props.setSkillObj}
+            search={props.search}
+            setSearch={props.setSearch}
           />
         ))}
       </div>

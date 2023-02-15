@@ -23,18 +23,25 @@ import { writeSpell } from "../../features/spellBookSelector/spellBookSelectorSl
 function App() {
   const thisSkillObj = useSelector((state) => state.skillSelector);
   const spellBook = useSelector((state) => state.spellBook);
-  const dispatch = useDispatch();
   const [allSpells, setAllSpells] = useState([]);
+  const [spellList, setSpellList] = useState([]);
   const [skillObj, setSkillObj] = useState();
   const [charLevel, setCharLevel] = useState(1);
   const [spellSlot, setSpellSlot] = useState(1);
   const [roll, setRoll] = useState("");
+  const [search, setSearch] = useState();
 
+  const dispatch = useDispatch();
   //queries api for the specific skill object
   const getSkillObj = (spell) => {
     fetch("https://www.dnd5eapi.co" + spell["url"])
       .then((res) => res.json())
       .then((data) => setSkillObj(data));
+  };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setSearch(e.target.value);
   };
 
   //saves skill gained from api call to the redux store
@@ -68,6 +75,15 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    setSpellList(allSpells);
+  }, [allSpells]);
+
+  useEffect(() => {
+    console.log("search triggered");
+    console.log(search);
+  }, [search]);
+
   //if there is a skill object then it is bound to the SkillSelect hook
   //  otherwise it just resets the value
   useEffect(() => {
@@ -84,11 +100,23 @@ function App() {
       <div className="container">
         <br />
         <div className="row">
+          <div class="input-group">
+            <div class="form-outline">
+              <input
+                onChange={handleChange}
+                type="search"
+                id="form1"
+                class="form-control"
+              />
+            </div>
+          </div>
           <SkillColumn
-            allSpells={allSpells}
+            spellList={spellList}
             skillObj={skillObj}
             getSkillObj={getSkillObj}
             setSkillObj={setSkillObj}
+            search={search}
+            setSearch={setSearch}
           />
           <div className="col-md-6 ">
             <div className="row statsColumn">
