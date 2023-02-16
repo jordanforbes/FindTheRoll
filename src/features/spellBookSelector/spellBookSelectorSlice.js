@@ -10,6 +10,10 @@ export const spellBookSelectorSlice = createSlice({
   name: "spellBookSelector",
   initialState,
   reducers: {
+    addBulkSpells: (state, action) => {
+      state.book = action.payload;
+    },
+
     writeSpell: (state, action) => {
       let inBook = false;
       // console.log("book debug");
@@ -32,6 +36,7 @@ export const spellBookSelectorSlice = createSlice({
   },
 });
 
-export const { writeSpell, deleteSpell } = spellBookSelectorSlice.actions;
+export const { writeSpell, deleteSpell, addBulkSpells } =
+  spellBookSelectorSlice.actions;
 
 export default spellBookSelectorSlice.reducer;
