@@ -28,7 +28,7 @@ export const spellBookSelectorSlice = createSlice({
       if (inBook === false) {
         state.book.push(newSpell);
 
-        fetch("https://localhost:8081/spellbook/", {
+        fetch("http://localhost:8081/spellbook", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: newSpell,

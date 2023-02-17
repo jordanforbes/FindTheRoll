@@ -94,9 +94,9 @@ function App() {
     console.log("post method testing *******");
     fetch("http://localhost:8081/spellbook", {
       method: "POST",
+      mode: "no-cors",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
       body: {
         uuid: 1111,
@@ -105,7 +105,7 @@ function App() {
         url: "/api/spells/polymorph",
       },
     })
-      .then((res) => console.log(res))
+      .then((res) => res.json())
       .then(console.log("post ended *****"));
   };
 

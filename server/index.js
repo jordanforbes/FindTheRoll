@@ -36,7 +36,7 @@ app.get("/spellbook/", (req, res) => {
 app.post("/spellbook", (req, res) => {
   let dbCopy = [...db];
   console.log("post method **********************");
-  console.log(req.query);
+  console.log(req);
   dbCopy.push({
     uuid: req.query.uuid,
     index: req.query.index,
