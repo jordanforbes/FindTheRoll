@@ -18,7 +18,10 @@ import {
   changeUrl,
   resetSkill,
 } from "../../features/skillSelector/skillSelectorSlice";
-import { writeSpell } from "../../features/spellBookSelector/spellBookSelectorSlice";
+import {
+  writeSpell,
+  addBulkSpells,
+} from "../../features/spellBookSelector/spellBookSelectorSlice";
 
 function App() {
   const thisSkillObj = useSelector((state) => state.skillSelector);
@@ -73,6 +76,20 @@ function App() {
   //--binds list to AllSpells hook
   //the actual selected spell object is recieved
   //in the 'SkillButton.jsx' component file
+  useEffect(() => {
+    console.log("test route");
+    fetch("http://localhost:8081/test-route/")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data");
+        console.log(data);
+        dispatch(addBulkSpells(data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   useEffect(() => {
     console.log("$$$$$$$$$$$$$$$$ spell book");
     console.log(spellBook);

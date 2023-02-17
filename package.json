@@ -32,7 +32,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "nodemon ./server/index.js"
+    "server": "nodemon ./server/index.js",
+    "startup": "yarn start \n yarn run server"
   },
   "eslintConfig": {
     "extends": [
