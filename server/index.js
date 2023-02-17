@@ -15,36 +15,55 @@ app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
 
-// app.use(
-//   bodyParser.urlencoded({
-//     // to support URL-encoded bodies
-//     extended: true,
-//   })
-// );
 app.use(cors());
 
-// app.all("/", function (req, res, next) {
+// app.use(function (req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-//   res.json(db);
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
 //   next();
 // });
 
 // Routes
-app.get("/test-route/", (req, res) => {
+app.get("/spellbook/", (req, res) => {
   console.log("in server");
   console.log(db);
   res.json(db);
 });
 
-app.post("/test-route/", (req, res) => {
-  // console.log("in server");
-  // console.log(db);
-  // res.json(db);
+app.post("/spellbook", (req, res) => {
+  let dbCopy = [...db];
+  console.log("post method **********************");
+  console.log(req.query);
+  dbCopy.push({
+    uuid: req.query.uuid,
+    index: req.query.index,
+    name: req.query.name,
+    url: req.query.url,
+  });
+
+  fs.writeFileSync(
+    "db/db.json",
+    JSON.stringify(dbCopy),
+    (err) => err && console.log(err)
+  );
+  res.json({ data: dbCopy, message: null });
 });
 
-app.delete("/test-route/", (req, res) => {
-  // console.log("in server");
-  // console.log(db);
-  // res.json(db);
+app.delete("/spellbook/", (req, res) => {
+  let dbCopy = [];
+  let deletedIndex = req.query.index;
+  console.log("######### delete method");
+  db.map((spell) => (deletedIndex !== spell.index ? dbCopy.push(spell) : ``));
+  console.log(req.query.index);
+
+  fs.writeFileSync(
+    "db/db.json",
+    JSON.stringify(dbCopy),
+    (err) => err && console.log(err)
+  );
+
+  res.json({ data: db, message: null });
 });

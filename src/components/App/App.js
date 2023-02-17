@@ -20,7 +20,7 @@ import {
 } from "../../features/skillSelector/skillSelectorSlice";
 import {
   writeSpell,
-  addBulkSpells,
+  matchToDB,
 } from "../../features/spellBookSelector/spellBookSelectorSlice";
 
 function App() {
@@ -35,13 +35,13 @@ function App() {
   const [search, setSearch] = useState();
 
   // called when app renders
-  useEffect(() => {
-    fetch("/test-route")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:8081/spellbook/")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //     });
+  // }, []);
   const dispatch = useDispatch();
   //queries api for the specific skill object
   const getSkillObj = (spell) => {
@@ -72,24 +72,47 @@ function App() {
     console.log(spellBook);
   };
 
-  //acquires list of spells
-  //--binds list to AllSpells hook
-  //the actual selected spell object is recieved
-  //in the 'SkillButton.jsx' component file
-  useEffect(() => {
-    console.log("test route");
-    fetch("http://localhost:8081/test-route/")
+  const matchDB = () => {
+    console.log("spellbook route");
+    fetch("http://localhost:8081/spellbook/")
       .then((res) => res.json())
       .then((data) => {
         console.log("data");
         console.log(data);
-        dispatch(addBulkSpells(data));
+        dispatch(matchToDB(data));
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+  // get initial spells from db
+  useEffect(() => {
+    matchDB();
   }, []);
 
+  const postTest = () => {
+    console.log("post method testing *******");
+    fetch("http://localhost:8081/spellbook", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: {
+        uuid: 1111,
+        index: "polymorph",
+        name: "Polymorph",
+        url: "/api/spells/polymorph",
+      },
+    })
+      .then((res) => console.log(res))
+      .then(console.log("post ended *****"));
+  };
+
+  //acquires list of spells
+  //--binds list to AllSpells hook
+  //the actual selected spell object is recieved
+  //in the 'SkillButton.jsx' component file
   useEffect(() => {
     console.log("$$$$$$$$$$$$$$$$ spell book");
     console.log(spellBook);
@@ -120,6 +143,22 @@ function App() {
     setRoll(false);
   }, [skillObj]);
 
+  //  const handleChoiceSubmit = (e) => {
+  //    fetch("/pokemon-team", {
+  //      method: "POST",
+  //      headers: { "Content-Type": "application/json" },
+  //      body: e.target.value,
+  //    })
+  //      .then((response) => response.json())
+  //      .then((data) => {
+  //        if (data.full) {
+  //          alert("Pokemon team is full! Release team to restart");
+  //        } else {
+  //          setChoices(data.data);
+  //        }
+  //      });
+  //  };
+
   return (
     <div className="App">
       <div className="container">
@@ -127,6 +166,7 @@ function App() {
         <div className="row">
           <div class="input-group">
             <div class="form-outline">
+              <Button onClick={postTest}>Post Test</Button>
               <input
                 onChange={handleChange}
                 type="search"

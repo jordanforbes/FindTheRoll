@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-//TODO: prevent duplicate spells from being added
-
 const initialState = {
   book: [],
 };
@@ -10,23 +8,33 @@ export const spellBookSelectorSlice = createSlice({
   name: "spellBookSelector",
   initialState,
   reducers: {
-    addBulkSpells: (state, action) => {
-      state = action.payload;
+    matchToDB: (state, action) => {
+      state.book = action.payload;
     },
     writeSpell: (state, action) => {
       let inBook = false;
-      // console.log("book debug");
+      console.log("^^^^^^^^^^^^^^^ write book debug");
       state.book.map((book) =>
         book.name === action.payload.name ? (inBook = true) : ""
       );
 
+      let newSpell = {
+        uuid: 1111,
+        index: action.payload.index,
+        name: action.payload.name,
+        url: action.payload.url,
+      };
+
       if (inBook === false) {
-        state.book.push({
-          uuid: 1111,
-          index: action.payload.index,
-          name: action.payload.name,
-          url: action.payload.url,
-        });
+        state.book.push(newSpell);
+
+        fetch("https://localhost:8081/spellbook/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: newSpell,
+        }).then((res) => res.json());
+      } else {
+        console.log("duplicate spell");
       }
     },
     deleteSpell: (state, action) => {
@@ -35,7 +43,7 @@ export const spellBookSelectorSlice = createSlice({
   },
 });
 
-export const { addBulkSpells, writeSpell, deleteSpell } =
+export const { matchToDB, writeSpell, deleteSpell } =
   spellBookSelectorSlice.actions;
 
 export default spellBookSelectorSlice.reducer;
