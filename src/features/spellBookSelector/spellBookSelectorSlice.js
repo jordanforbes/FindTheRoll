@@ -10,6 +10,11 @@ export const spellBookSelectorSlice = createSlice({
   initialState,
   reducers: {
     matchToDB: (state, action) => {
+      // let data;
+      // axios
+      //   .get("http://localhost:8081/spellbook/")
+      //   .then((res) => console.log("spelldatadebug", res.data))
+      //   .then((res) => (data = res.data));
       state.book = action.payload;
     },
     writeSpell: (state, action) => {

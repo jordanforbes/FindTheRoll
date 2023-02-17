@@ -65,15 +65,12 @@ function App() {
     console.log(spellBook);
   };
 
+  //sets redux spellbook state to saved database
   const matchDB = () => {
     console.log("spellbook route");
-    fetch("http://localhost:8081/spellbook/")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("data");
-        console.log(data);
-        dispatch(matchToDB(data));
-      })
+    axios
+      .get("http://localhost:8081/spellbook/")
+      .then((res) => dispatch(matchToDB(res.data)))
       .catch((err) => {
         console.log(err);
       });

@@ -41,8 +41,6 @@ app.get("/spellbook/", (req, res) => {
 
 app.post("/spellbook", (req, res) => {
   let dbCopy = [...db];
-  // console.log("post method **********************");
-  // console.log(req.body.params);
   let content = req.body.params;
   dbCopy.push(content);
 
@@ -54,9 +52,8 @@ app.post("/spellbook", (req, res) => {
   res.json({ data: dbCopy, message: null });
 });
 
-app.delete(`/spellbook/`, (req, res) => {
+app.delete("/spellbook/", (req, res) => {
   let deletedIndex = req.query.index;
-  // console.log("######### delete method");
   const newDB = db.filter((spell) => {
     return spell.index !== deletedIndex;
   });
