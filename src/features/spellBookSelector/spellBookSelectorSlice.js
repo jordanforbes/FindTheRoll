@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   book: [],
@@ -27,18 +28,19 @@ export const spellBookSelectorSlice = createSlice({
 
       if (inBook === false) {
         state.book.push(newSpell);
-
-        fetch("http://localhost:8081/spellbook", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: newSpell,
-        }).then((res) => res.json());
+        axios
+          .post("http://localhost:8081/spellbook", { params: newSpell })
+          .then((res) => res.data)
+          .then((res) => console.log(res));
       } else {
         console.log("duplicate spell");
       }
     },
     deleteSpell: (state, action) => {
       state.book = state.book.filter((e) => e.index !== action.payload.index);
+      axios.delete("http://localhost:8081/spellbook/", {
+        params: action.payload,
+      });
     },
   },
 });

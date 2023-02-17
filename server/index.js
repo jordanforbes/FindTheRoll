@@ -16,15 +16,21 @@ app.listen(PORT, () => {
 });
 
 app.use(cors());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+app.use(bodyParser.json());
 
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 // Routes
 app.get("/spellbook/", (req, res) => {
@@ -35,14 +41,10 @@ app.get("/spellbook/", (req, res) => {
 
 app.post("/spellbook", (req, res) => {
   let dbCopy = [...db];
-  console.log("post method **********************");
-  console.log(req);
-  dbCopy.push({
-    uuid: req.query.uuid,
-    index: req.query.index,
-    name: req.query.name,
-    url: req.query.url,
-  });
+  // console.log("post method **********************");
+  // console.log(req.body.params);
+  let content = req.body.params;
+  dbCopy.push(content);
 
   fs.writeFileSync(
     "db/db.json",
@@ -52,16 +54,17 @@ app.post("/spellbook", (req, res) => {
   res.json({ data: dbCopy, message: null });
 });
 
-app.delete("/spellbook/", (req, res) => {
-  let dbCopy = [];
+app.delete(`/spellbook/`, (req, res) => {
   let deletedIndex = req.query.index;
-  console.log("######### delete method");
-  db.map((spell) => (deletedIndex !== spell.index ? dbCopy.push(spell) : ``));
+  // console.log("######### delete method");
+  const newDB = db.filter((spell) => {
+    return spell.index !== deletedIndex;
+  });
   console.log(req.query.index);
 
   fs.writeFileSync(
     "db/db.json",
-    JSON.stringify(dbCopy),
+    JSON.stringify(newDB),
     (err) => err && console.log(err)
   );
 

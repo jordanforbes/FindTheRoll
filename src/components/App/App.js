@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import { Button } from "react-bootstrap";
 import Description from "../Description/Description.jsx";
 import SkillColumn from "../SkillColumn/SkillColumn";
@@ -34,14 +35,6 @@ function App() {
   const [roll, setRoll] = useState("");
   const [search, setSearch] = useState();
 
-  // called when app renders
-  // useEffect(() => {
-  //   fetch("http://localhost:8081/spellbook/")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //     });
-  // }, []);
   const dispatch = useDispatch();
   //queries api for the specific skill object
   const getSkillObj = (spell) => {
@@ -90,25 +83,6 @@ function App() {
     matchDB();
   }, []);
 
-  const postTest = () => {
-    console.log("post method testing *******");
-    fetch("http://localhost:8081/spellbook", {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: {
-        uuid: 1111,
-        index: "polymorph",
-        name: "Polymorph",
-        url: "/api/spells/polymorph",
-      },
-    })
-      .then((res) => res.json())
-      .then(console.log("post ended *****"));
-  };
-
   //acquires list of spells
   //--binds list to AllSpells hook
   //the actual selected spell object is recieved
@@ -143,22 +117,6 @@ function App() {
     setRoll(false);
   }, [skillObj]);
 
-  //  const handleChoiceSubmit = (e) => {
-  //    fetch("/pokemon-team", {
-  //      method: "POST",
-  //      headers: { "Content-Type": "application/json" },
-  //      body: e.target.value,
-  //    })
-  //      .then((response) => response.json())
-  //      .then((data) => {
-  //        if (data.full) {
-  //          alert("Pokemon team is full! Release team to restart");
-  //        } else {
-  //          setChoices(data.data);
-  //        }
-  //      });
-  //  };
-
   return (
     <div className="App">
       <div className="container">
@@ -166,7 +124,6 @@ function App() {
         <div className="row">
           <div class="input-group">
             <div class="form-outline">
-              <Button onClick={postTest}>Post Test</Button>
               <input
                 onChange={handleChange}
                 type="search"
