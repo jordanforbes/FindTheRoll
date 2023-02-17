@@ -2,12 +2,16 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const db = require("../db/db.json");
 const cors = require("cors");
+const fs = require("fs");
 
 const PORT = 8080;
 
 const app = express();
 app.use(express.json());
 // We are using our packages here
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
+});
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 
 app.use(
@@ -23,10 +27,6 @@ app.all("/", function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   res.json(db);
   next();
-});
-
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
 });
 
 //routes
