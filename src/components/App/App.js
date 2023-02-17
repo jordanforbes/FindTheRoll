@@ -31,6 +31,14 @@ function App() {
   const [roll, setRoll] = useState("");
   const [search, setSearch] = useState();
 
+  // called when app renders
+  useEffect(() => {
+    fetch("/test-route")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }, []);
   const dispatch = useDispatch();
   //queries api for the specific skill object
   const getSkillObj = (spell) => {

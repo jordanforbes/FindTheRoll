@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const db = require("../db/db.json");
 const cors = require("cors");
-const fs = require("fs");
 
 const PORT = 8080;
 

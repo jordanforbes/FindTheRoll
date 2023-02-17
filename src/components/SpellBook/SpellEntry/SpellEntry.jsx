@@ -1,5 +1,5 @@
 import { Button, CloseButton } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { deleteSpell } from "../../../features/spellBookSelector/spellBookSelectorSlice";
 
