@@ -10,6 +10,7 @@ import StatDetails from "../StatDetails/StatDetails";
 import RollColumn from "../RollColumn/RollColumn";
 import SlotColumn from "../SlotColumn/SlotColumn";
 import SpellBook from "../SpellBook/SpellBook";
+import SaveBtn from "../SaveBtn/SaveBtn";
 import {
   changeSkill,
   resetSkill,
@@ -120,10 +121,6 @@ function App() {
           <SkillColumn spellList={spellList} getSkillObj={getSkillObj} />
           <div className="col-md-6 ">
             <div className="row statsColumn">
-              <i
-                onClick={saveToSpellBook}
-                class="glyphicon glyphicon-star-empty saveBtn"
-              ></i>
               <StatDetails />
             </div>
             <div className="row">

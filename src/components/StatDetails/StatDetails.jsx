@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-
+import SaveBtn from "../SaveBtn/SaveBtn";
 const StatDetails = (props) => {
   const [damageType, setDamageType] = useState(false);
   const [modifier, setModifier] = useState(false);
@@ -59,7 +59,8 @@ const StatDetails = (props) => {
           <tr>
             <th scope="row">Name: </th>
             <td>
-              <h3>{thisSkillObj.name}</h3>
+              <SaveBtn className="statSaveBtn" />
+              <h3 className="spellName">{thisSkillObj.name}</h3>
             </td>
           </tr>
           <DamageType />
