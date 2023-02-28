@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import {
-  changeName,
-  changeIndex,
-  changeDesc,
-  changeDamage,
-} from "../../../features/skillSelector/skillSelectorSlice";
+import { changeSkill } from "../../../features/skillSelector/skillSelectorSlice";
 
 const SkillButton = (props) => {
   const [skill, setSkill] = useState({});
@@ -14,10 +9,7 @@ const SkillButton = (props) => {
 
   useEffect(() => {
     setSkill(props.skill);
-    dispatch(changeName(props.skill.name ? props.skill.name : false));
-    dispatch(changeIndex(props.skill.index ? props.skill.index : false));
-    dispatch(changeDesc(props.skill.desc ? props.skill.desc : false));
-    dispatch(changeDamage(props.skill.damage ? props.skill.damage : false));
+    dispatch(changeSkill(props.skill ? props.skill : false));
   }, [skill]);
 
   const handleClick = (e) => {

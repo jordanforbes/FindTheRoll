@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { Button } from "react-bootstrap";
+import { Glyphicon } from "react-bootstrap";
+
 import Description from "../Description/Description.jsx";
 import SkillColumn from "../SkillColumn/SkillColumn";
 import StatDetails from "../StatDetails/StatDetails";
@@ -9,14 +11,7 @@ import RollColumn from "../RollColumn/RollColumn";
 import SlotColumn from "../SlotColumn/SlotColumn";
 import SpellBook from "../SpellBook/SpellBook";
 import {
-  changeName,
-  changeIndex,
-  changeDesc,
-  changeDamage,
-  changeLevel,
-  changeHigherLevel,
-  changeClasses,
-  changeUrl,
+  changeSkill,
   resetSkill,
 } from "../../features/skillSelector/skillSelectorSlice";
 import {
@@ -30,8 +25,6 @@ function App() {
   const [allSpells, setAllSpells] = useState([]);
   const [spellList, setSpellList] = useState([]);
   const [skillObj, setSkillObj] = useState();
-  const [charLevel, setCharLevel] = useState(1);
-  const [spellSlot, setSpellSlot] = useState(1);
   const [roll, setRoll] = useState("");
   const [search, setSearch] = useState();
 
@@ -43,23 +36,13 @@ function App() {
       .then((data) => setSkillObj(data));
   };
 
+  //search function
   const handleChange = (e) => {
     e.preventDefault();
     setSearch(e.target.value);
   };
 
-  //saves skill gained from api call to the redux store
-  const skillSelect = (skill) => {
-    dispatch(changeName(skill.name));
-    dispatch(changeIndex(skill.index));
-    dispatch(changeDesc(skill.desc));
-    dispatch(changeDamage(skill.damage));
-    dispatch(changeLevel(skill.level));
-    dispatch(changeUrl(skill.url));
-    dispatch(changeClasses(skill.classes));
-    dispatch(changeHigherLevel(skill.higher_level));
-  };
-
+  //adds spell to book
   const saveToSpellBook = () => {
     dispatch(writeSpell(thisSkillObj));
     console.log(spellBook);
@@ -76,15 +59,12 @@ function App() {
       });
   };
   // get initial spells from db
-  useEffect(() => {
-    matchDB();
-  }, []);
-
   //acquires list of spells
   //--binds list to AllSpells hook
   //the actual selected spell object is recieved
   //in the 'SkillButton.jsx' component file
   useEffect(() => {
+    matchDB();
     console.log("$$$$$$$$$$$$$$$$ spell book");
     console.log(spellBook);
     fetch("https://www.dnd5eapi.co/api/spells/")
@@ -101,13 +81,21 @@ function App() {
   useEffect(() => {
     console.log("search triggered");
     console.log(search);
+    var PATTERN = /^Ba/;
+    console.log("Pattern: " + PATTERN);
+    let filtered = spellList.filter(function (str) {
+      return PATTERN.test(str.name);
+    });
+    console.log(filtered);
+    // setSpellList([]);
   }, [search]);
 
   //if there is a skill object then it is bound to the SkillSelect hook
   //  otherwise it just resets the value
   useEffect(() => {
     if (skillObj) {
-      skillSelect(skillObj);
+      //saves skill gained from api call to the redux store
+      dispatch(changeSkill(skillObj));
     } else {
       dispatch(resetSkill());
     }
@@ -129,45 +117,18 @@ function App() {
               />
             </div>
           </div>
-          <SkillColumn
-            spellList={spellList}
-            skillObj={skillObj}
-            getSkillObj={getSkillObj}
-            setSkillObj={setSkillObj}
-            search={search}
-            setSearch={setSearch}
-          />
+          <SkillColumn spellList={spellList} getSkillObj={getSkillObj} />
           <div className="col-md-6 ">
             <div className="row statsColumn">
-              <Button onClick={saveToSpellBook} class="btn">
-                Save
-              </Button>
-              <StatDetails
-                skillObj={skillObj}
-                getSkillObj={getSkillObj}
-                setSkillObj={setSkillObj}
-                spellSlot={spellSlot}
-                setSpellSlot={setSpellSlot}
-                charLevel={charLevel}
-                setCharLevel={setCharLevel}
-                allSpells={allSpells}
-                thisSkillObj={thisSkillObj}
-              />
+              <i
+                onClick={saveToSpellBook}
+                class="glyphicon glyphicon-star-empty saveBtn"
+              ></i>
+              <StatDetails />
             </div>
             <div className="row">
               <div className=" detailsColumn">
-                {skillObj ? (
-                  <Description
-                    skillObj={skillObj}
-                    setSkillObj={setSkillObj}
-                    spellSlot={spellSlot}
-                    setSpellSlot={setSpellSlot}
-                    charLevel={charLevel}
-                    setCharLevel={setCharLevel}
-                  />
-                ) : (
-                  ""
-                )}
+                {skillObj ? <Description skillObj={skillObj} /> : ""}
               </div>
             </div>
           </div>
@@ -178,12 +139,9 @@ function App() {
             </div>
           </div>
         </div>
+        <br />
         <div className="row">
-          <SpellBook
-            skillObj={skillObj}
-            getSkillObj={getSkillObj}
-            setSkillObj={setSkillObj}
-          />
+          <SpellBook skillObj={skillObj} getSkillObj={getSkillObj} />
         </div>
       </div>
     </div>

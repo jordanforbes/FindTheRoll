@@ -1,41 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  name: "",
-  index: "",
-  desc: "",
-  url: "",
-  damage: "",
-  damage_type: "",
-  damage_at_slot_level: "",
-  damage_at_character_level: "",
-  higherLevel: "",
-  level: "",
-  classes: "",
+  name: false,
+  index: false,
+  desc: false,
+  url: false,
+  damage: false,
+  damage_type: false,
+  damage_at_slot_level: false,
+  damage_at_character_level: false,
+  higherLevel: false,
+  level: false,
+  classes: false,
   inSpellBook: false,
 };
 export const skillSelectorSlice = createSlice({
   name: "skillSelector",
   initialState,
   reducers: {
-    changeName: (state, action) => {
-      state.name = action.payload;
-    },
+    changeSkill: (state, action) => {
+      state.name = action.payload.name;
+      state.index = action.payload.index;
+      state.desc = action.payload.desc;
+      state.url = action.payload.url;
+      state.level = action.payload.level;
+      state.damage = action.payload.damage;
+      state.higherLevel = action.payload.higher_Level;
+      state.classes = action.payload.classes;
 
-    changeIndex: (state, action) => {
-      state.index = action.payload;
-    },
-
-    changeDesc: (state, action) => {
-      state.desc = action.payload;
-    },
-
-    changeUrl: (state, action) => {
-      state.url = action.payload;
-    },
-
-    changeDamage: (state, action) => {
-      state.damage = action.payload;
+      state.damage = action.payload.damage;
       // console.log("damage debug");
       if (state.damage) {
         if (state.damage.damage_at_slot_level) {
@@ -62,43 +55,73 @@ export const skillSelectorSlice = createSlice({
       }
     },
 
-    changeLevel: (state, action) => {
-      state.level = action.payload;
-    },
-
-    changeHigherLevel: (state, action) => {
-      state.higherLevel = action.payload;
-    },
-
-    changeClasses: (state, action) => {
-      state.classes = action.payload;
-    },
-
     resetSkill: (state) => {
       state = initialState;
     },
-    addToSpellBook: (state) => {
-      return {
-        uuid: 1111,
-        index: state.index,
-        name: state.name,
-        url: state.url,
-      };
+
+    spellBookToggle: (state) => {
+      state.inSpellBook = !state.inSpellBook;
     },
   },
 });
 
-export const {
-  changeName,
-  changeIndex,
-  changeDesc,
-  changeDamage,
-  changeLevel,
-  changeHigherLevel,
-  changeClasses,
-  changeUrl,
-  resetSkill,
-  addToSpellBook,
-} = skillSelectorSlice.actions;
+export const { changeSkill, resetSkill, spellBookToggle } =
+  skillSelectorSlice.actions;
 
 export default skillSelectorSlice.reducer;
+
+// changeName: (state, action) => {
+//   state.name = action.payload.name;
+// },
+
+// changeIndex: (state, action) => {
+//   state.index = action.payload;
+// },
+
+// changeDesc: (state, action) => {
+//   state.desc = action.payload;
+// },
+
+// changeUrl: (state, action) => {
+//   state.url = action.payload;
+// },
+
+// changeDamage: (state, action) => {
+//   state.damage = action.payload;
+//   // console.log("damage debug");
+//   if (state.damage) {
+//     if (state.damage.damage_at_slot_level) {
+//       // console.log("slots");
+//       // console.log(state.damage.damage_at_slot_level);
+//       state.damage_at_slot_level = state.damage.damage_at_slot_level;
+//       state.damage_at_character_level = false;
+//     } else if (state.damage.damage_at_character_level) {
+//       // console.log("levels");
+//       // console.log(state.damage.damage_at_character_level);
+//       state.damage_at_character_level =
+//         state.damage.damage_at_character_level;
+//       state.damage_at_slot_level = false;
+//     } else {
+//       // console.log("no damage mods");
+//       state.damage_at_character_level = false;
+//       state.damage_at_slot_level = false;
+//     }
+//   } else {
+//     state.damage = false;
+//     state.damage_at_character_level = false;
+//     state.damage_at_slot_level = false;
+//     // console.log("no damage");
+//   }
+// },
+
+// changeLevel: (state, action) => {
+//   state.level = action.payload;
+// },
+
+// changeHigherLevel: (state, action) => {
+//   state.higherLevel = action.payload;
+// },
+
+// changeClasses: (state, action) => {
+//   state.classes = action.payload;
+// },

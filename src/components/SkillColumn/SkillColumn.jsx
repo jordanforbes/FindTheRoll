@@ -9,11 +9,7 @@ const SkillColumn = (props) => {
             className="skillButton"
             key={i}
             skill={skill}
-            skillObj={props.skillObj}
             getSkillObj={props.getSkillObj}
-            setSkillObj={props.setSkillObj}
-            search={props.search}
-            setSearch={props.setSearch}
           />
         ))}
       </div>

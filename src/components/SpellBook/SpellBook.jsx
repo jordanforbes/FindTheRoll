@@ -8,12 +8,7 @@ const SpellBook = (props) => {
   return (
     <div className="row">
       {spellBook.book.map((spell) => (
-        <SpellEntry
-          skillObj={props.skillObj}
-          getSkillObj={props.getSkillObj}
-          setSkillObj={props.setSkillObj}
-          spell={spell}
-        />
+        <SpellEntry getSkillObj={props.getSkillObj} spell={spell} />
       ))}
     </div>
   );
