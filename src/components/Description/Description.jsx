@@ -8,9 +8,6 @@ const Description = (props) => {
 
   return (
     <div className="skillDetails">
-      <div className="row">
-        <b>Description:</b>
-      </div>
       <div className="row descRow">
         {desc.length > 1 ? desc.map((line) => <p>{line}</p>) : <p>{desc}</p>}
       </div>

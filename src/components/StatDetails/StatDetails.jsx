@@ -28,12 +28,13 @@ const StatDetails = (props) => {
     if (damageType) {
       return (
         <>
-          <tr>
-            <th scope="row">Damage Type: </th>
-            <td>
-              <p>{damageType}</p>
-            </td>
-          </tr>
+          <>
+            <div className="col-md-4">
+              <p>
+                <b>Damage Type:</b> {damageType}
+              </p>
+            </div>
+          </>
         </>
       );
     }
@@ -42,31 +43,32 @@ const StatDetails = (props) => {
   const DamageMod = () => {
     if (modifier) {
       return (
-        <tr>
-          <th scope="row">Modifier: </th>
-          <td>
-            <p>{modifier}</p>
-          </td>
-        </tr>
+        <>
+          <div className="col-md-4">
+            <p>
+              <b>Modifier:</b> {modifier}
+            </p>
+          </div>
+        </>
       );
     }
   };
 
   return (
     <div className="container">
-      <table className="table statsTable">
-        <tbody>
-          <tr>
-            <th scope="row">Name: </th>
-            <td>
-              <SaveBtn className="statSaveBtn" />
-              <h3 className="spellName">{thisSkillObj.name}</h3>
-            </td>
-          </tr>
-          <DamageType />
-          <DamageMod />
-        </tbody>
-      </table>
+      <div className="row">
+        <div className="col-md-2">
+          <SaveBtn className="col-md-2 statSaveBtn" />
+        </div>
+        <div className="col-md-10">
+          <h2 className="spellName">{thisSkillObj.name}</h2>
+        </div>
+      </div>
+      <div className="row">
+        <DamageType />
+        <div className="col-md-4"></div>
+        <DamageMod />
+      </div>
     </div>
   );
 };

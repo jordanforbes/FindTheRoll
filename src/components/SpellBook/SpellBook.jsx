@@ -6,7 +6,7 @@ const SpellBook = (props) => {
   const spellBook = useSelector((state) => state.spellBook);
 
   return (
-    <div className="row">
+    <div className="row spellBookRow">
       {spellBook.book.map((spell) => (
         <SpellEntry getSkillObj={props.getSkillObj} spell={spell} />
       ))}

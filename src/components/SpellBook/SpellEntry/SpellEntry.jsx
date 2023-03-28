@@ -15,12 +15,12 @@ const SpellEntry = (props) => {
   };
 
   return (
-    <div className="col-md-1 SpellEntry">
-      {props.spell.name}
-      <Button className="btn-primary" onClick={handleClick}>
-        show
-      </Button>
-      <CloseButton onClick={handleRemove} />
+    <div className="col-md-1 SpellEntry" onClick={handleClick}>
+      <div className="row spellNameRow">
+        {props.spell.name}
+        <CloseButton className="closeBtn" onClick={handleRemove} />
+      </div>
+      <div className="row spellBtnRow"></div>
     </div>
   );
 };

@@ -1,4 +1,44 @@
 .SpellEntry {
+  border: 1px solid darkgrey;
   display: block;
   float: left;
+  // width: 10%;
+  // height: 10%;
+  border-radius: 5px;
+  padding-left: 1%;
+  padding: 1rem;
+  margin-left: 1%;
+  margin-bottom: 1%;
+  width: 15%;
+}
+.SpellEntry:hover {
+  cursor: pointer;
+  background-color: darkgray;
+  color: white;
+  font-weight: bold;
+  border: 1px solid white;
+}
+.showBtn {
+  width: 50%;
+}
+.closeBtn {
+  border: none;
+  margin-left: 5%;
+  margin-right: 5%;
+  display: block;
+  float: right;
+}
+.closeBtn:hover {
+  // margin: 1%;
+  background-color: white;
+  color: black;
+}
+.spellBtnRow {
+  position: absolute;
+  bottom: 0;
+  width: 9%;
+}
+.spellNameRow {
+  display: block;
+  float: top;
 }
