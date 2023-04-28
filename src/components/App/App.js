@@ -114,39 +114,46 @@ function App() {
     <div className="App">
       <div className="container">
         <br />
-        <div className="row">
-          <div class="input-group">
-            <div class="form-outline">
-              <SearchSpells setSearch={setSearch} />
-            </div>
+        <div className="row ">
+          <div className="col-md-1 titleBox">
+            <h2 className="titleDrop">Rolly-Dee</h2>
           </div>
-          <SkillColumn
-            spellList={spellList}
-            getSkillObj={getSkillObj}
-            search={search}
-          />
-          <div className="col-md-6 ">
-            <div className="row statsColumn">
-              <StatDetails />
-            </div>
-            <div className="row">
-              <div className=" detailsColumn">
-                {skillObj ? <Description skillObj={skillObj} /> : ""}
-              </div>
-            </div>
-          </div>
-          <div className="col-md-2">
-            <div className="row">{roll ? <RollColumn roll={roll} /> : ""}</div>
-            <div className="row">
-              <SlotColumn setRoll={setRoll} />
-            </div>
-          </div>
-        </div>
-        <br />
-        <div className="row">
-          <SpellBook skillObj={skillObj} getSkillObj={getSkillObj} />
         </div>
       </div>
+      <div className="row">
+        <div className="col-md-1"></div>
+        <div className="input-group">
+          <div className="form-outline">
+            <SearchSpells setSearch={setSearch} />
+          </div>
+        </div>
+        <SkillColumn
+          spellList={spellList}
+          getSkillObj={getSkillObj}
+          search={search}
+        />
+        <div className="col-md-4 ">
+          <div className="row statsColumn">
+            <StatDetails />
+          </div>
+          <div className="row">
+            <div className=" detailsColumn">
+              {skillObj ? <Description skillObj={skillObj} /> : ""}
+            </div>
+          </div>
+        </div>
+        <div className="col-md-2">
+          <div className="row">{roll ? <RollColumn roll={roll} /> : ""}</div>
+          <div className="row">
+            <SlotColumn setRoll={setRoll} />
+          </div>
+        </div>
+      </div>
+      <br />
+      <div className="row">
+        <SpellBook skillObj={skillObj} getSkillObj={getSkillObj} />
+      </div>
+      <div className="col-md-1"></div>
     </div>
   );
 }

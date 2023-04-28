@@ -2,12 +2,12 @@ import SkillButton from "./SkillButton/SkillButton";
 import { useState, useEffect } from "react";
 
 const SkillColumn = (props) => {
-  console.log("SKILLCOLUMN ");
+  // console.log("SKILLCOLUMN ");
 
-  useEffect(() => {
-    console.log("SKILLCOLUMN SEARCH");
-    console.log(props.search);
-  }, [props.search]);
+  // useEffect(() => {
+  //   console.log("SKILLCOLUMN SEARCH");
+  //   console.log(props.search);
+  // }, [props.search]);
   return (
     <div className=" col-md-3">
       <div className="skillColumn">
