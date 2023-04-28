@@ -7,13 +7,13 @@ const SearchSpells = (props) => {
   const handleChange = (e) => {
     e.preventDefault();
     // props.setSearch(e.target.value);
-    setSearchString(e.target.value);
+    props.setSearch(e.target.value);
   };
 
-  const goSearch = () => {
-    console.log("EXECUTING SEARCH OF " + searchString);
-    props.setSearch(searchString);
-  };
+  // const goSearch = () => {
+  //   console.log("EXECUTING SEARCH OF " + searchString);
+  //   props.setSearch(searchString);
+  // };
   return (
     <>
       <input
@@ -22,9 +22,9 @@ const SearchSpells = (props) => {
         id="form1"
         class="form-control"
       />
-      <Button class="btn btn-primary" onClick={goSearch}>
+      {/* <Button class="btn btn-primary" onClick={goSearch}>
         Search
-      </Button>
+      </Button> */}
     </>
   );
 };

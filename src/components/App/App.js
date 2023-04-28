@@ -10,6 +10,7 @@ import StatDetails from "../StatDetails/StatDetails";
 import RollColumn from "../RollColumn/RollColumn";
 import SlotColumn from "../SlotColumn/SlotColumn";
 import SpellBook from "../SpellBook/SpellBook";
+import SearchSpells from "../SearchSpells/SearchSpells.jsx";
 import SaveBtn from "../SaveBtn/SaveBtn";
 import {
   changeSkill,
@@ -20,6 +21,7 @@ import {
   matchToDB,
 } from "../../features/spellBookSelector/spellBookSelectorSlice";
 
+// TODO: WHERE IS ZONE OF TRUTH WHY IS IT THE DEFAULT ENTRY???
 function App() {
   const thisSkillObj = useSelector((state) => state.skillSelector);
   const spellBook = useSelector((state) => state.spellBook);
@@ -82,13 +84,18 @@ function App() {
   useEffect(() => {
     console.log("search triggered");
     console.log(search);
-    var PATTERN = /^Ba/;
-    console.log("Pattern: " + PATTERN);
-    let filtered = spellList.filter(function (str) {
-      return PATTERN.test(str.name);
-    });
-    console.log(filtered);
+    // var PATTERN = /^Ba/;
+    // console.log("Pattern: " + PATTERN);
+    // let filtered = spellList.filter(function (str) {
+    //   return PATTERN.test(str.name);
+    // });
+    // console.log(filtered);
     // setSpellList([]);
+    console.log(spellList);
+    let filteredList = spellList.filter((spell) => spell[0]);
+    console.log("FILTEREDLIST:");
+    console.log(filteredList);
+    console.log("filterend");
   }, [search]);
 
   //if there is a skill object then it is bound to the SkillSelect hook
@@ -110,15 +117,14 @@ function App() {
         <div className="row">
           <div class="input-group">
             <div class="form-outline">
-              <input
-                onChange={handleChange}
-                type="search"
-                id="form1"
-                class="form-control"
-              />
+              <SearchSpells setSearch={setSearch} />
             </div>
           </div>
-          <SkillColumn spellList={spellList} getSkillObj={getSkillObj} />
+          <SkillColumn
+            spellList={spellList}
+            getSkillObj={getSkillObj}
+            search={search}
+          />
           <div className="col-md-6 ">
             <div className="row statsColumn">
               <StatDetails />
